@@ -1,0 +1,51 @@
+{% include "front/fr/bloc/head-import.html.twig" %}
+<body style="background-color: #fff!important">
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
+<main role="main">
+    <div class="container marketing  pb-5">
+        {% include "front/fr/bloc/fil_arian.html.twig" %}
+        <div class=" container  px-3">
+            <div class="row">
+                {% if content.fullWidth %}
+                    <div class="  col-md-12  col-sm-12 col-12  px-md-4">
+                        {% if content.picture %}
+                            <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}"
+                                                        alt="{{ content.title }}"
+                                                        title="{{ content.title }}"
+                                                        class="img-fluid  py-2 w-100"></div>
+                        {% endif %}
+                        {{ content.body | raw }}
+                    </div>
+                {% else %}
+                    <div class="col-md-12 col-lg-8 col-sm-12 col-12 px-md-4">
+                        {% if content.picture %}
+                            <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}"
+                                                        alt="{{ content.title }}"
+                                                        title="{{ content.title }}"
+                                                        class="img-fluid  py-2 w-100"></div>
+                        {% endif %}
+                        {{ content.body | raw }}
+                    </div>
+
+                    {{ render(controller(
+                        'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}
+                    )) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+    )) }}
+    </div>
+</main>
+
+
+{% include "front/fr/bloc/import-js.html.twig" %}
+
+
+
+
+

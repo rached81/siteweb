@@ -1,0 +1,34 @@
+
+{% include "front/fr/bloc/head-import.html.twig" %}
+
+<body>
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
+
+    <main role="main">
+        <div class="container marketing bg-light" >
+            {# {% include "front/fr/bloc/baniere-img.html.twig" %} #}
+       
+            {{ render(controller(
+                'App\\Controller\\Front\\ContentController::banner', {'_local':  app.request.locale}
+            )) }}
+            <div>
+                <!-- START : BLOC INFO VOUYAGEURS -->
+            {# {% include "front/fr/bloc/info-travel.html.twig" %} #}
+            {% include "front/fr/bloc/communication.html.twig" %}
+</div>
+            {{ render(controller(
+                'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+            )) }}
+
+</div>
+    </main>
+
+
+        {% include "front/fr/bloc/import-js.html.twig" %}
+
+
+
+
+

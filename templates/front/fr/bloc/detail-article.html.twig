@@ -1,0 +1,32 @@
+<div class="row">
+
+    <div class="col-md-12 col-lg-8 col-sm-12 col-12">
+
+        <article class="entry entry-single">
+
+            <h3>{{ current_page }}</h3>
+            <div class="entry-meta">
+                <ul class="list-inline">
+{#                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>#}
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#">
+                            <time datetime="2020-01-01">{{ content.publishedDate ? content.publishedDate|date('d-m-Y') : '' }}</time>
+                        </a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                </ul>
+            </div>
+            <div class="entry-img"> <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ current_page }}" title="{{ current_page }}" class="img-fluid  py-2 w-100"></div>
+
+            <div class="entry-content text-justify">
+               {{ content.body | raw }}
+            </div>
+
+
+        </article>
+    </div>
+
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}
+    )) }}
+
+
+</div>

@@ -1,0 +1,18 @@
+{% include "front/fr/bloc/head-import.html.twig" %}
+<body>
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
+<main role="main">
+    <div class="container marketing bg-light">
+        {% include "front/fr/bloc/fil_arian.html.twig" %}
+        <div class=" container">
+            {% include "front/fr/bloc/form-contact.html.twig" %}
+        </div>
+    </div>
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+    )) }}
+</main>
+{% include "front/ar/bloc/import-js.html.twig" %}
+

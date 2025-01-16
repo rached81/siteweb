@@ -1,0 +1,39 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+fos_ck_editor:
+  default_config: default
+  configs:
+    default:
+      toolbar: standard
+      extra_plugins: "autogrow"
+      autogrow_maxHeight: 800
+      autogrow_minHeight: 200
+      autogrow_bottomSpace: 50
+      removeButtons: 'Subscript,Superscript'
+      removePlugins: 'elementspath'
+      filebrowserBrowseRoute: elfinder
+      filebrowserBrowseRouteParameters: []
+
+#fos_ck_editor:
+#    input_sync: true
+#    configs:
+#        main_config:
+##            inline: true
+#            toolbarr:  full
+#            htmlSupport: {
+#                allow: [
+#                    {
+#                        name: /.*/,
+#                        attributes: true,
+#                        classes: true,
+#                        styles: true
+#                    }
+#                ]
+#            }
+#            filebrowserBrowseRoute: elfinder
+#            filebrowserBrowseRouteParameters: []
+
