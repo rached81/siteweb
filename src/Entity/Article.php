@@ -51,8 +51,10 @@ class Article
      */
     private $num;
 
-
-
+    /**
+     * @ORM\OneToMany(targetEntity=ArticleImage::class, mappedBy="article")
+     */
+private $articleImages;
     // /**
     //  * @ORM\OneToMany(targetEntity=Content::class, mappedBy="article")
     //  */

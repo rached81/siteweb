@@ -33,6 +33,10 @@ class Category
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
+     */
+    private $profiles;
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")

@@ -101,10 +101,10 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $profile;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
-     */
-    private $articles;
+//    /**
+//     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
+//     */
+//    private $articles;
 
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="author_id")
