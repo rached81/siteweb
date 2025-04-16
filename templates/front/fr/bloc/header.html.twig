@@ -25,7 +25,7 @@
                         <a class="nav-link nav-link-topbar " href="{{ path('front_content_show', {'id': sub_menu.content.article.num, 'slug': sub_menu.content.slug}) }}">{{ sub_menu.label }} <span class="sr-only">(current)</span></a>
                     
                     {% else %}
-                        <a href="{{ path(sub_menu.route) }}"  class="nav-link  nav-link-topbar" >{{ sub_menu.label | capitalize }}</a>
+                        <a href="{{ path(sub_menu.route) }}"  class="nav-link  nav-link-topbar" >{{ sub_menu.label  | capitalize }}</a>
                     {% endif %}
                     </li>
                  {% endfor %}

@@ -52,6 +52,9 @@ class ContentType extends AbstractType
             ->add('title', TextType::class, ['required' => true])
             ->add('intro')
 //            ->add('scope', HiddenType::class)
+//            ->add('body', CKEditorType::class, [
+//                    'label' => 'Contenu',
+//                ])
             ->add('body', CKEditorType::class, [
                 'config' => [
                     'toolbar' => 'full',

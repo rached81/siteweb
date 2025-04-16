@@ -6,8 +6,11 @@ twig:
 
 fos_ck_editor:
   default_config: default
+  base_path: "/bundles/fosckeditor"
+  js_path: "/bundles/fosckeditor/ckeditor.js"
   configs:
     default:
+      licenseKey: ""
       toolbar: standard
       extra_plugins: "autogrow"
       autogrow_maxHeight: 800
@@ -17,6 +20,7 @@ fos_ck_editor:
       removePlugins: 'elementspath'
       filebrowserBrowseRoute: elfinder
       filebrowserBrowseRouteParameters: []
+
 
 #fos_ck_editor:
 #    input_sync: true
