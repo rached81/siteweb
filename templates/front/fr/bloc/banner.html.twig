@@ -196,8 +196,8 @@ max-width: 1920px;
         {% endif  %}
         {% if loop.index != 1 %}
         <div class="carousel-item">
-        {% endif  %}             
-
+        {% endif  %}
+{#          {{ asset('uploads/'~ content.picture) }}#}
                 <img class="first-slide d-block w-100" id="img-ban-2" src="{{ asset('uploads/'~ content.picture) }}" alt="First slide">
                   <!-- TEXT MSG -->
                 <div class="container d-flex align-items-end float-right">

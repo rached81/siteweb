@@ -363,6 +363,32 @@ class ContentController extends AbstractController
             'current_page' => $category->getLabel(),
         ]);
     }
+//    #[Route('/', name: 'home')]
+    public function bannerCarousel(): Response
+    {
+        $slides = [
+            [
+                'image' => 'uploads/images/banner1.jpg',
+                'alt' => 'Première bannière',
+                'caption' => ['title' => 'Titre 1', 'text' => 'Description du premier slide'],
+            ],
+            [
+                'image' => 'uploads/images/banner2.jpg',
+                'alt' => 'Deuxième bannière',
+                'caption' => ['title' => 'Titre 2', 'text' => 'Description du deuxième slide'],
+            ],
+//            [
+//                'image' => 'images/banner3.jpg',
+//                'alt' => 'Troisième bannière',
+//                'caption' => null, // optionnel si pas de texte
+//            ],
+        ];
+
+//        return $this->render('home/index.html.twig', [
+             return $this->render('front/fr/bloc/bannerCarousel.html.twig', [
+            'slides' => $slides,
+        ]);
+    }
 
     public function banner($_locale): Response
     {
@@ -370,7 +396,9 @@ class ContentController extends AbstractController
         // $language = $this->languageRepository->findOneBy(['alias' => $_locale]);
         $lang_from_url = $this->languageRepository->findOneByAlias($_locale);
         $scope = $this->scopeRepository->findOneByAlias('BANNER');
+        dd($scope);
         $contents = $this->contentRepository->findBy(['scope'=> $scope, 'language' => $lang_from_url, 'published' => true] );
+        dd($contents);
         return $this->render('front/' . $_locale . '/bloc/banner.html.twig', [
             'contents' => $contents,
         ]);
