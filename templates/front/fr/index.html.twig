@@ -7,12 +7,10 @@
 )) }}
 
     <main role="main">
-        <div class="container marketing bg-light" >
+        <div class="container " >
             {# {% include "front/fr/bloc/baniere-img.html.twig" %} #}
        
-            {{ render(controller(
-                'App\\Controller\\Front\\ContentController::bannerCarousel', {'_local':  app.request.locale}
-            )) }}
+            {{ render(controller('App\\Controller\\Front\\ContentController::showCarousel')) }}
             <div>
                 <!-- START : BLOC INFO VOUYAGEURS -->
             {# {% include "front/fr/bloc/info-travel.html.twig" %} #}

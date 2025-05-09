@@ -1,0 +1,36 @@
+{# templates/carousel/_carousel.html.twig #}
+
+<div id="menuCarousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-indicators">
+    {% for item in carousel.children %}
+      <button type="button" data-target="#menuCarousel"
+              data-slide-to="{{ loop.index0 }}"
+              class="{{ loop.first ? 'active' : '' }}"></button>
+    {% endfor %}
+  </div>
+
+  <div class="carousel-inner">
+    {% for item in carousel.children %}
+    <div class="{{ item.attributes['class'] }}"
+    {% for attr, value in item.attributes %}
+    {% if attr != 'class' %}{{ attr }}="{{ value }}" {% endif %}
+    {% endfor %}>
+    <img src="{{ asset(item.extras.image) }}" class="d-block w-100" alt="{{ item.label }}">
+    <div class="carousel-caption d-none d-md-block">
+      <h5>{{ item.label }}</h5>
+      {% if item.extras.description %}
+        <p>{{ item.extras.description }}</p>
+      {% endif %}
+      <a href="{{ item.extras.link }}" class="btn btn-primary">Voir l'offre</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+  <button class="carousel-control-prev" type="button" data-target="#menuCarousel" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-target="#menuCarousel" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>

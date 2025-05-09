@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Content;
 use App\Entity\Language;
 use App\Form\ContentType;
+use App\Menu\CarouselBuilder;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
@@ -387,6 +388,40 @@ class ContentController extends AbstractController
 //        return $this->render('home/index.html.twig', [
              return $this->render('front/fr/bloc/bannerCarousel.html.twig', [
             'slides' => $slides,
+        ]);
+    }
+
+    public function showCarousel(CarouselBuilder $carouselBuilder): Response
+    {
+        // En pratique, vous récupéreriez ces données depuis la base de données
+        $carouselItems = [
+            [
+                'title' => 'Premier slide',
+                'description' => 'Description du premier slide',
+                'image' => 'uploads/images/banner1.jpg',
+                'link' => '/promo1',
+                'interval' => 3000
+            ],
+            [
+                'title' => 'Deuxième slide',
+                'description' => 'Description du deuxième slide',
+                'image' => 'uploads/images/banner2.jpg',
+                'link' => '/promo2',
+                'interval' => 3000
+            ],
+            [
+                'title' => 'troixième slide',
+                'description' => 'Description du 3ème slide',
+                'image' => 'uploads/images/anti-vendalisme.png',
+                'link' => '/promo3',
+                'interval' => 3000
+            ],
+        ];
+
+        $carousel = $carouselBuilder->createCarousel($carouselItems);
+
+            return $this->render('front/fr/bloc/_carousel.html.twig', [
+            'carousel' => $carousel
         ]);
     }
 
