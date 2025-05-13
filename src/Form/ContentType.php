@@ -55,11 +55,12 @@ class ContentType extends AbstractType
 //            ->add('body', CKEditorType::class, [
 //                    'label' => 'Contenu',
 //                ])
-            ->add('body', CKEditorType::class, [
-                'config' => [
-                    'toolbar' => 'full',
-                ],
-            ])
+->add('body', CKEditorType::class)
+//            ->add('body', CKEditorType::class, [
+//                'config' => [
+//                    'toolbar' => 'full',
+//                ],
+//            ])
 //            ->add('body', CKEditorType::class, [
 //                'config' => array(
 //                    'stylesSet' => 'my_styles',

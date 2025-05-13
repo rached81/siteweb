@@ -40,6 +40,8 @@
 
 
 </head>
+
+
 <body>
 <section class="body">
 
@@ -123,6 +125,31 @@
 
     {% include "back/bloc/_right_menu.htm.twig" %}
 </section>
+<script>
+    // Supprime les alertes CKEditor liées à la version non sécurisée
+    (function () {
+        const originalError = console.error;
+        console.error = function (...args) {
+            if (
+                args.length &&
+                typeof args[0] === 'string' &&
+                args[0].includes('CKEditor') &&
+                args[0].includes('not secure')
+            ) {
+                return;
+            }
+            originalError.apply(console, args);
+        };
+
+        const originalAlert = window.alert;
+        window.alert = function (msg) {
+            if (typeof msg === 'string' && msg.includes('CKEditor') && msg.includes('not secure')) {
+                return;
+            }
+            originalAlert.apply(window, arguments);
+        };
+    })();
+</script>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
@@ -180,6 +207,7 @@
 <script src="{{ asset('js/examples/examples.dashboard.js') }}"></script>
 <script>
     $(document).ready(function () {
+
         const switch_route_lang = "{{ path('switch_locale', {'locale' : '_loc_'})|escape('js') }}";
         const urlLoadGallery =  "{{ path('app_gallery_load' , {'id': '_content_id_'} ) |escape('js') }}"
 
@@ -318,9 +346,8 @@ $('#load_gallery').click( function (e) {
 
             }
         });
+//  bloc message alert ckeditor
 
-
-    });
     /**
     * Load Gallery
     */
@@ -631,7 +658,7 @@ $('#load_gallery').click( function (e) {
         });
 
     }
-</script>
 
+</script>
 </body>
 </html>

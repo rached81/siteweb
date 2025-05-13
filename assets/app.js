@@ -15,7 +15,6 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
-
 import bsCustomFileInput from 'bs-custom-file-input';
 
 // loads the jquery package from node_modules
@@ -24,14 +23,16 @@ import $ from 'jquery';
 // import the function from greet.js (the .js extension is optional)
 // ./ (or ../) means to look for a local file
 import greet from './greet';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import CKEditor from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import CKEditor from '@ckeditor/ckeditor5-react';
+//
+// window.ClassicEditor = ClassicEditor;
+// window.CKEditor = CKEditor;
 
-window.ClassicEditor = ClassicEditor;
-window.CKEditor = CKEditor;
+// bsCustomFileInput.init();
+
 
 bsCustomFileInput.init();
-
 
 $(document).ready(function() {
     $('body').prepend('<h1>'+greet('jill')+'</h1>');

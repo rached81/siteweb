@@ -6,11 +6,11 @@ CKEditor 4 - Releases
 This repository contains the official release versions of [CKEditor 4](https://ckeditor.com/ckeditor-4/).
 
 There are four versions for each release &mdash; `standard-all`, `basic`, `standard`, and `full`.
-They differ in the number of plugins that are compiled into the main `ckeditor.js` file as well as the toolbar configuration.
+They differ in the number of plugins that are compiled into the main `ckeditor.json` file as well as the toolbar configuration.
 
 See the [comparison](https://ckeditor.com/cke4/presets) of the `basic`, `standard`, and `full` installation presets for more details.
 
-The `standard-all` build includes all official CKSource plugins with only those from the `standard` installation preset compiled into the `ckeditor.js` file and enabled in the configuration.
+The `standard-all` build includes all official CKSource plugins with only those from the `standard` installation preset compiled into the `ckeditor.json` file and enabled in the configuration.
 
 All versions available in this repository were built using [CKBuilder](https://ckeditor.com/cke4/builder), so they are optimized and ready to be used in a production environment.
 
