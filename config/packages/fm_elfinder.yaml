@@ -1,18 +1,29 @@
 fm_elfinder:
-#    assets_path: /bundles/fmelfinder
-    assets_path: /
     instances:
         default:
             locale: fr
-            editor: ckeditor
-            theme: smoothness
-            relative_path: false
+            editor: custom # Très important : pas "ckeditor"
             connector:
                 roots:
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads/images
-                        show_hidden: false
-                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        path: uploads
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
-                        upload_max_size: 2M
+                        upload_max_size: 5M
+
+
+#fm_elfinder:
+#    instances:
+#        default:
+#            locale: fr
+#            editor: ckeditor
+#            connector:
+#                roots:
+#                    uploads:
+#                        driver: LocalFileSystem
+#                        path: uploads
+#                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+#                        upload_deny: ['all']
+#                        upload_max_size: 10M
+

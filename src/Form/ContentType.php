@@ -6,7 +6,6 @@ use App\Entity\Content;
 use App\Entity\Scope;
 use App\Repository\ScopeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -16,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class ContentType extends AbstractType
 {
     private $security;
@@ -51,30 +50,10 @@ class ContentType extends AbstractType
             ->add('title', TextType::class, ['required' => true])
             ->add('title', TextType::class, ['required' => true])
             ->add('intro')
-//            ->add('scope', HiddenType::class)
-//            ->add('body', CKEditorType::class, [
-//                    'label' => 'Contenu',
-//                ])
-->add('body', CKEditorType::class)
-//            ->add('body', CKEditorType::class, [
-//                'config' => [
-//                    'toolbar' => 'full',
-//                ],
-//            ])
-//            ->add('body', CKEditorType::class, [
-//                'config' => array(
-//                    'stylesSet' => 'my_styles',
-//                ),
-//
-//                'styles' => array(
-//                    'my_styles' => array(
-//                        // array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-//                        array('name' => 'cssCKE', 'element' => 'span', 'attributes' => array('class' => 'my_cssCKE')),
-//                        // array('name' => 'Multiple Element Style', 'element' => array('h2', 'span'), 'attributes' => array('class' => 'my_class')),
-//                        // array('name' => 'Widget Style', 'type' => 'widget' , 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
-//                    ),
-//                ),
-//                "row_attr" => ['class' => 'col-lg-10']])
+->add('body', TextareaType::class, [
+    'attr' => ['class' => 'ckeditor']
+])
+
             ->add('tags', TextType::class,
                 ['attr' => ['data-role' => "tagsinput", 'data-tag-class' => "badge badge-primary", 'class' => "form-control"
                 ]])
