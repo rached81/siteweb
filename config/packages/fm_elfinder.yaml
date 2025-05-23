@@ -13,6 +13,7 @@ fm_elfinder:
                         upload_max_size: 5M
 
 
+
 #fm_elfinder:
 #    instances:
 #        default:
