@@ -1,22 +1,20 @@
 // assets/app.js
 
-// (vos autres imports, par ex. Bootstrap / CSS / Stimulus, etc.)
+// (vos autres imports Bootstrap, CSS, Stimulus, jQuery, etc. si existants)
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/app.scss'; // si vous avez un dossier styles/
+import './styles/app.scss';
 
-// … vos initialisations existantes (jQuery, Stimulus, etc.) …
-
-// Import du build Full de CKEditor (depuis assets/ckeditor-full.js)
+// Import du build “Full-Free” CKEditor
 import ClassicEditor from './ckeditor-full';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.ckeditor').forEach(el => {
         ClassicEditor
             .create(el, {
-                licenseKey: 'GPL',               // Indispensable en mode open source
+                licenseKey: 'GPL',                    // Nécessaire pour CKEditor OSS
                 ckfinder: {
-                    uploadUrl: '/efconnect/default/' // Connecteur elFinder
+                    uploadUrl: '/efconnect/default/'    // Voir section 7
                 }
             })
             .catch(error => console.error(error));

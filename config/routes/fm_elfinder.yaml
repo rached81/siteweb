@@ -1,8 +1,4 @@
+#fm_elfinder:
+#    resource: "@FMElfinderBundle/Resources/config/routing.yaml"
 elfinder:
     resource: '@FMElfinderBundle/Resources/config/routing.yaml'
-#elfinder_shortcut:
-#    path: /elfinder
-#    defaults:
-#        _controller: FM\ElfinderBundle\Controller\ElFinderController::show
-#        instance: default
-#        homeFolder: ''

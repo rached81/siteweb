@@ -1,8 +1,16 @@
+#fm_elfinder:
+#    instances:
+#        default:
+#            connector:
+#                roots:
+#                    uploads:
+#                        driver: LocalFileSystem
+#                        path: uploads
 fm_elfinder:
     instances:
         default:
             locale: fr
-            editor: custom # Très important : pas "ckeditor"
+            editor: custom            # important : pas “ckeditor”
             connector:
                 roots:
                     uploads:
@@ -11,20 +19,3 @@ fm_elfinder:
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 5M
-
-
-
-#fm_elfinder:
-#    instances:
-#        default:
-#            locale: fr
-#            editor: ckeditor
-#            connector:
-#                roots:
-#                    uploads:
-#                        driver: LocalFileSystem
-#                        path: uploads
-#                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
-#                        upload_deny: ['all']
-#                        upload_max_size: 10M
-

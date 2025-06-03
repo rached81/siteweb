@@ -185,21 +185,21 @@
 <!-- Examples -->
 <script src="{{ asset('js/examples/examples.dashboard.js') }}"></script>
 {# CKEditor 5 Full build depuis le CDN (toujours gratuit, GPL) #}
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/full-all/ckeditor.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.ckeditor').forEach(el => {
-            ClassicEditor
-                .create(el, {
-                    licenseKey: 'GPL',              // déclaration de la licence open-source
-                    ckfinder: {
-                        uploadUrl: '/efconnect/default/'  // ton connecteur elFinder
-                    }
-                })
-                .catch(error => console.error(error));
-        });
-    });
-</script>
+{#<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/full-all/ckeditor.js"></script>#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function () {#}
+{#        document.querySelectorAll('.ckeditor').forEach(el => {#}
+{#            ClassicEditor#}
+{#                .create(el, {#}
+{#                    licenseKey: 'GPL',              // déclaration de la licence open-source#}
+{#                    ckfinder: {#}
+{#                        uploadUrl: '/efconnect/default/'  // ton connecteur elFinder#}
+{#                    }#}
+{#                })#}
+{#                .catch(error => console.error(error));#}
+{#        });#}
+{#    });#}
+{#</script>#}
 
 
 <script>

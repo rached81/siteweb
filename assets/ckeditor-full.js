@@ -1,7 +1,7 @@
-// assets/js/ckeditor-full.js
+// assets/ckeditor-full.js
 
-// On importe le build “full-free” que nous venons d’installer
+// On importe le build “full-free” CKEditor (tous les plugins gratuits)
 import ClassicEditor from '@nickdobson/ckeditor5-build-full-free';
 
-// On l’exporte pour pouvoir l’importer dans app.js
+// On l’exporte pour pouvoir l’importer depuis app.js
 export default ClassicEditor;
