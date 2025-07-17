@@ -35,8 +35,15 @@
 
 <div class="row">
     <div class="col" id="some-custom-id">
-        {{ form_row(form.body) }}
+{#        {{ form_row(form.body) }}#}
+{#        {{ form_row(form.body, {#}
+{#            'attr': {'class': 'ckeditor'},#}
+{#        }) }}#}
+{#        <div class="ckeditor-wrapper" style="display: none;">#}
+            {{ form_row(form.body, {'attr': {'class': 'ckeditor'}}) }}
+{#        </div>#}
     </div>
+
     <small>{{ form_help(form.body) }}</small>
 
     <div class="form-error">

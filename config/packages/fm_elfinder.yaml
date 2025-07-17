@@ -1,21 +1,24 @@
-#fm_elfinder:
-#    instances:
-#        default:
-#            connector:
-#                roots:
-#                    uploads:
-#                        driver: LocalFileSystem
-#                        path: uploads
 fm_elfinder:
+    assets_path: '%env(APP_URL)%'
     instances:
         default:
-            locale: fr
-            editor: custom            # important : pas “ckeditor”
+            locale: 'fr'
+            editor: ckeditor
+            cors_support: true
             connector:
+                binds:
+                    upload.presave: [ 'filter.utf8' ]
                 roots:
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads
+                        path: '%kernel.project_dir%/public/uploads'
+                        url: '%env(APP_URL)%/uploads'
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
-                        upload_max_size: 5M
+                        upload_max_size: 10M
+#                         alias: 'Uploads'
+                        attributes:
+                            - pattern: '/\.(php|py|pl|sh|xml|html?)$/i'
+                              read: false
+                              write: false
+                              locked: true

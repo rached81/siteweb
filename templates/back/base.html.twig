@@ -7,6 +7,7 @@
     <meta name="keywords" content="HTML5 Admin Template"/>
     <meta name="description" content="Porto Admin - Responsive HTML5 Template">
     <meta name="author" content="okler.net">
+    <meta name="csrf-token" content="{{ csrf_token('upload') }}">
     {% block stylesheets %}
         <!-- Mobile Metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -24,6 +25,7 @@
         <link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.carousel.css') }}"/>
         <link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.theme.default.css') }}"/>
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/fosckeditor/styles.css') }}">
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
     <!-- Theme CSS -->
@@ -128,8 +130,18 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
-{#    <script data-main="{{ asset('bundles/fmelfinder/js/require.js') }}" src="{{ asset('bundles/fmelfinder/js/require.js') }}"></script>#}
 
+    {# Version sécurisée qui ne nécessite pas la variable entrypoints #}
+{#    {% if file_exists(public_dir ~ '/build/entrypoints.json') and entrypoint_exists('ckeditor-custom') %}#}
+{#        {{ encore_entry_script_tags('ckeditor-custom') }}#}
+{#    {% endif %}#}
+{#    {{ encore_entry_script_tags('ckeditor-custom') }}#}
+    <script src="{{ asset('bundles/fmelfinder/js/elfinder.min.js') }}"></script>
+{#    <script data-main="{{ asset('bundles/fmelfinder/js/require.js') }}" src="{{ asset('bundles/fmelfinder/js/require.js') }}"></script>#}
+    <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bundles/fosckeditor/adapters/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/fmelfinder/css/elfinder.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/fmelfinder/css/theme.css') }}">
 {% endblock %}
 
 <!-- Vendor -->
@@ -184,7 +196,9 @@
 <script src="{{ asset('js/theme.init.js') }}"></script>
 <!-- Examples -->
 <script src="{{ asset('js/examples/examples.dashboard.js') }}"></script>
+
 {# CKEditor 5 Full build depuis le CDN (toujours gratuit, GPL) #}
+
 {#<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/full-all/ckeditor.js"></script>#}
 {#<script>#}
 {#    document.addEventListener('DOMContentLoaded', function () {#}

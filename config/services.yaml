@@ -30,7 +30,15 @@ services:
     # App\EventListener\AccessControlListener:
     #     tags: 
     #     - { name: kernel.event_listener}
+    App\EventListener\ElfinderAuthListener:
+        arguments: [ '@security.helper' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
 
+    App\Security\ElfinderVoter:
+        arguments: [ '@security.helper' ]
+        tags:
+            - { name: security.voter }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 #     App\EventListener\CustomLogoutSubscriber:

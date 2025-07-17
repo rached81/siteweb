@@ -1,0 +1,6 @@
+elfinder_connector:
+  path: /elfinder/connector
+  controller: FM\ElfinderBundle\Controller\ElFinderController::load
+  defaults:
+    instance: default
+    homeFolder: ''
