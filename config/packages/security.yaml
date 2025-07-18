@@ -44,7 +44,7 @@ security:
     access_control:
         - { path: ^/back/login, role: PUBLIC_ACCESS }
         - { path: ^/back, roles: [ ROLE_ADMIN, ROLE_USER ] }
-        - { path: ^/uploads, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/uploads, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/efconnect, roles: PUBLIC_ACCESS  }
         - { path: ^/elfinder, roles: PUBLIC_ACCESS  }
 

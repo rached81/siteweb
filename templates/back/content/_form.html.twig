@@ -73,7 +73,12 @@
         {{ form_errors(form.picture) }}
     </div>
     <div class="col-lg-6">
-        <div class=""><img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ content.picture }}"/></div>
+        <div class="">
+            {% if content.picture %}
+                <img src="{{ asset('uploads/' ~ content.picture) }}" alt="{{ content.picture }}" />
+            {% endif %}
+
+        </div>
     </div>
 </div>
 

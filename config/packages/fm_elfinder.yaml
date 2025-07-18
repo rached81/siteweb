@@ -6,6 +6,7 @@ fm_elfinder:
             editor: ckeditor
             cors_support: true
             connector:
+                debug: true
                 binds:
                     upload.presave: [ 'filter.utf8' ]
                 roots:

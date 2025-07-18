@@ -13,6 +13,7 @@ document.querySelectorAll('.ckeditor').forEach(el => {
     el.style.display = 'none';
 
     ClassicEditor.create(el, {
+        licenseKey: 'GPL',
         language: 'fr',
         ckfinder: {
             uploadUrl: '/efconnect',
