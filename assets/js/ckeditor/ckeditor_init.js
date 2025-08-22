@@ -27,16 +27,6 @@ import "@ckeditor/ckeditor5-theme-lark/theme/theme.css";
 import  "ckeditor5/build/translations/fr";
 import  "ckeditor5/build/translations/ar";
 
-
-// ✅ Récupération dynamique de la locale
-// const langue = document.querySelector('.current_locale')?.id || 'fr';
-// window.appLocale = langue;
-// const currentLocale = window.appLocale;
-//
-// if (currentLocale === 'ar') {
-//     document.querySelector('.ckeditor').setAttribute('dir', 'rtl');
-// }
-// console.log( document.querySelector('.current_locale').id)
 const langue = document.querySelector('.current_locale')?.id || 'fr';
 console.log(langue);
 window.appLocale =  langue;
@@ -46,6 +36,7 @@ if (currentLocale === 'ar') {
     document.querySelector('.ckeditor').setAttribute('dir', 'rtl');
 }
 console.log(currentLocale);
+
 window.initEditor =  function(elementId, callback) {
     ClassicEditor
         .create( document.querySelector( elementId), {

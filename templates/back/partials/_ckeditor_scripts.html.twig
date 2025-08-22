@@ -1,0 +1,72 @@
+<script>window.appLocale = '{{ app.request.locale|e('js') }}';</script>
+<script type="importmap">
+    {
+      "imports": {
+        "ckeditor5": "/ckeditor5/ckeditor5.js",
+        "ckeditor5/": "/ckeditor5/"
+      }
+    }
+</script>
+
+<script type="module">
+    //curl -F "upload=@/c/Users/rached.benkhalifa/Pictures/Saved Pictures/aad-to-declaration-employeur.PNG" http://127.0.0.1:8000/upload/ckeditor
+
+    import { ClassicEditor } from 'ckeditor5';
+    import {
+        SourceEditing, Essentials, Autoformat, Alignment,
+        Bold, Italic, Strikethrough, Font, BlockQuote, Heading,
+        Link, List, Paragraph, CodeBlock, Highlight, Table
+    } from 'ckeditor5';
+
+    // Images + upload (✅ sans elFinder)
+    import { Image, ImageUpload, ImageCaption, ImageStyle, ImageResize, ImageToolbar } from 'ckeditor5';
+    import { SimpleUploadAdapter } from 'ckeditor5';
+    //FR  translation for CKeditor
+    import 'ckeditor5/translations/fr.js';
+    import 'ckeditor5/translations/ar.js';
+    const currentLocale = window.appLocale || 'ar'; // fallback si non défini
+    const target = document.querySelector('#content_body');
+    console.log('currentLocale', currentLocale);
+    if (target) {
+        ClassicEditor.create(target, {
+            language: {
+                ui: currentLocale,   // UI (menus, toolbars)
+                content: currentLocale // contenu (par défaut même que UI)
+            },
+            licenseKey:'GPL',
+            plugins: [
+                SourceEditing, Essentials, Autoformat,
+                Bold, Italic, Strikethrough, BlockQuote, Heading, Link, List, Paragraph,
+                Highlight, CodeBlock, Alignment, Font, Table,
+                Image, ImageCaption, ImageStyle, ImageToolbar, ImageResize, ImageUpload,
+                SimpleUploadAdapter
+            ],
+            toolbar: [
+                'undo','redo','|','heading','bold','italic','link','bulletedList','numberedList','|',
+                'uploadImage',  // 👈 bouton d’upload (pas insertImage)
+                'blockQuote','insertTable','codeBlock','sourceEditing','|',
+                'alignment','|','fontSize','fontFamily','fontColor'
+            ],
+            image: {
+                toolbar: [
+                    'imageTextAlternative','toggleImageCaption',
+                    'imageStyle:inline','imageStyle:block','imageStyle:side'
+                ]
+            },
+            simpleUpload: {
+                uploadUrl: '/back/upload/ckeditor',
+                withCredentials: false
+                // headers: { 'X-CSRF-TOKEN': '...' } // si tu mets du CSRF
+            }
+        })
+            .then(editor => {
+                if (currentLocale === 'ar') {
+                    // Contenu en RTL (la toolbar passe RTL toute seule quand ui = 'ar')
+                    editor.editing.view.change(w => {
+                        w.setAttribute('dir', 'rtl', editor.editing.view.document.getRoot());
+                    });
+                }
+            })
+            .catch(console.error);
+    }
+</script>

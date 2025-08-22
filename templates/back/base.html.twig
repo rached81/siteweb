@@ -25,8 +25,8 @@
         <link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.carousel.css') }}"/>
         <link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.theme.default.css') }}"/>
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('bundles/fosckeditor/styles.css') }}">
-        {{ encore_entry_link_tags('app') }}
+{#        <link rel="stylesheet" href="{{ asset('bundles/fosckeditor/styles.css') }}">#}
+{#        {{ encore_entry_link_tags('app') }}#}
     {% endblock %}
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
@@ -135,13 +135,6 @@
 {#    {% if file_exists(public_dir ~ '/build/entrypoints.json') and entrypoint_exists('ckeditor-custom') %}#}
 {#        {{ encore_entry_script_tags('ckeditor-custom') }}#}
 {#    {% endif %}#}
-{#    {{ encore_entry_script_tags('ckeditor-custom') }}#}
-    <script src="{{ asset('bundles/fmelfinder/js/elfinder.min.js') }}"></script>
-{#    <script data-main="{{ asset('bundles/fmelfinder/js/require.js') }}" src="{{ asset('bundles/fmelfinder/js/require.js') }}"></script>#}
-    <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('bundles/fosckeditor/adapters/jquery.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('bundles/fmelfinder/css/elfinder.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/fmelfinder/css/theme.css') }}">
 {% endblock %}
 
 <!-- Vendor -->
@@ -197,23 +190,6 @@
 <!-- Examples -->
 <script src="{{ asset('js/examples/examples.dashboard.js') }}"></script>
 
-{# CKEditor 5 Full build depuis le CDN (toujours gratuit, GPL) #}
-
-{#<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/full-all/ckeditor.js"></script>#}
-{#<script>#}
-{#    document.addEventListener('DOMContentLoaded', function () {#}
-{#        document.querySelectorAll('.ckeditor').forEach(el => {#}
-{#            ClassicEditor#}
-{#                .create(el, {#}
-{#                    licenseKey: 'GPL',              // déclaration de la licence open-source#}
-{#                    ckfinder: {#}
-{#                        uploadUrl: '/efconnect/default/'  // ton connecteur elFinder#}
-{#                    }#}
-{#                })#}
-{#                .catch(error => console.error(error));#}
-{#        });#}
-{#    });#}
-{#</script>#}
 
 
 <script>
