@@ -8,10 +8,10 @@
     <div class="container marketing ">
         {# {% include  "front/ar/bloc/baniere-ar.html.twig" %} #}
         {{ render(controller(
-                'App\\Controller\\Front\\ContentController::banner', {'_local':  app.request.locale}
+                'App\\Controller\\Front\\ContentController::showCarousel', {'_local':  app.request.locale}
             )) }}
     </div>
-    <!-- START : BLOC INFO VOUYAGEURS -->
+    <!-- START : BLOC INFO VOYAGEURS -->
     <div class=" container">
         {#                {% include  "front/ar/bloc/info-travel.html.twig" %} #}
         <!--                include "bloc/info-travel.php"; -->

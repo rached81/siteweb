@@ -432,12 +432,13 @@ text-align: left;
 }
 
 .title-baniere{
-    font-size: 18px;
+    font-size: 25px;
     text-align: left;
 }
 
 .btn-baniere{
     border-radius: 0px!important;
+;
 }
 
 .navbar-brand {

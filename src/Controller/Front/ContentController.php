@@ -113,6 +113,7 @@ class ContentController extends AbstractController
             'typeMenu' => 'main',
             'emplacement' => 'level_one'
         ], ['parent' => 'ASC']);
+//        dd($mainMenu, $plusMenu);
         return $this->render('front/' . $_locale . '/bloc/header.html.twig', [
             'menus' => $plusMenu,
             'main_menu' => $mainMenu
@@ -207,9 +208,8 @@ class ContentController extends AbstractController
         $current_page = [
             'ar' => 'الأخبار',
             'fr'=>'Les Dernières Nouvelles'
-
-
         ];
+
         if ($article->getCategory()->getAlias() == 'NEWS') {
 
             return $this->render('front/' . $aliasLocaleLang . '/all-news.html.twig', [
@@ -391,7 +391,7 @@ class ContentController extends AbstractController
         ]);
     }
 
-    public function showCarousel(CarouselBuilder $carouselBuilder): Response
+    public function showCarousel($_locale, CarouselBuilder $carouselBuilder): Response
     {
         // En pratique, vous récupéreriez ces données depuis la base de données
         $carouselItems = [
@@ -399,28 +399,54 @@ class ContentController extends AbstractController
                 'title' => 'Premier slide',
                 'description' => 'Description du premier slide',
                 'image' => 'uploads/images/banner1.jpg',
-                'link' => '/promo1',
+                'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
                 'interval' => 3000
             ],
             [
                 'title' => 'Deuxième slide',
                 'description' => 'Description du deuxième slide',
                 'image' => 'uploads/images/banner2.jpg',
-                'link' => '/promo2',
+                'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
                 'interval' => 3000
             ],
             [
                 'title' => 'troixième slide',
                 'description' => 'Description du 3ème slide',
                 'image' => 'uploads/images/anti-vendalisme.png',
-                'link' => '/promo3',
+                'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
                 'interval' => 3000
             ],
         ];
+        if($_locale == 'ar'){
+            $carouselItems = [
+                [
+                    'title' => 'العنوان الأول',
+                    'description' => 'وصف الصورة الأولى وصف الصورة الأولى وصف الصورة الأولى وصف الصورة الأولى وصف الصورة الأولى وصف الصورة الأولى وصف الصورة الأولى ',
+                    'image' => 'uploads/images/banner1.jpg',
+                    'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
+                    'interval' => 3000
+                ],
+                [
+                    'title' => 'العنوان الثاني',
+                    'description' => 'وصف الصورة الثاني وصف الصورة الثاني وصف الصورة الثاني وصف الصورة الثاني وصف الصورة الثاني',
+                    'image' => 'uploads/images/banner2.jpg',
+                    'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
+                    'interval' => 3000
+                ],
+                [
+                    'title' => 'العنوان الثالث',
+                    'description' => 'وصف الصورة الثالثة وصف الصورة الثالثة وصف الصورة الثالثة وصف الصورة الثالثة ',
+                    'image' => 'uploads/images/anti-vendalisme.png',
+                    'link' => 'http://127.0.0.1:8000/fr/collision-d-un-bus-avec-un-camion/648ee2d13a1e8',
+                    'interval' => 3000
+                ],
+            ];
+        }
+
 
         $carousel = $carouselBuilder->createCarousel($carouselItems);
 
-            return $this->render('front/fr/bloc/_carousel.html.twig', [
+            return $this->render('front/'.$_locale.'/bloc/_banner.html.twig', [
             'carousel' => $carousel
         ]);
     }
@@ -431,9 +457,9 @@ class ContentController extends AbstractController
         // $language = $this->languageRepository->findOneBy(['alias' => $_locale]);
         $lang_from_url = $this->languageRepository->findOneByAlias($_locale);
         $scope = $this->scopeRepository->findOneByAlias('BANNER');
-        dd($scope);
+//        dd($scope);
         $contents = $this->contentRepository->findBy(['scope'=> $scope, 'language' => $lang_from_url, 'published' => true] );
-        dd($contents);
+//        dd($contents);
         return $this->render('front/' . $_locale . '/bloc/banner.html.twig', [
             'contents' => $contents,
         ]);
