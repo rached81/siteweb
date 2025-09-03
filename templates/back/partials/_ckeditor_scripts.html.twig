@@ -27,7 +27,7 @@
     const currentLocale = window.appLocale || 'ar'; // fallback si non défini
     const target = document.querySelector('#content_body');
     console.log('currentLocale', currentLocale);
-    if (target) {
+    // if (target) {
         ClassicEditor.create(target, {
             language: {
                 ui: currentLocale,   // UI (menus, toolbars)
@@ -68,5 +68,5 @@
                 }
             })
             .catch(console.error);
-    }
+    // }
 </script>
