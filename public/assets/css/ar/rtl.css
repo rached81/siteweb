@@ -1,0 +1,23 @@
+/* /assets/css/ar/rtl.css */
+html[lang="ar"][dir="rtl"] { direction: rtl; }
+
+/* Inverser la grille uniquement où nécessaire */
+html[dir="rtl"] .reverse-on-rtl { flex-direction: row-reverse; }
+
+/* Breadcrumb RTL */
+html[dir="rtl"] .breadcrumb { direction: rtl; }
+html[dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
+    float: right;
+    padding-left: .5rem;
+    padding-right: 0;
+}
+
+/* Listes/ cartes à droite par défaut */
+html[dir="rtl"] .list-group-item,
+html[dir="rtl"] .card-header,
+html[dir="rtl"] .card-body { text-align: right; }
+
+/* Aide utilitaire si des classes v4 LTR traînent */
+html[dir="rtl"] .float-left { float: right !important; }
+html[dir="rtl"] .float-right { float: left !important; }
+html[dir="rtl"] .text-left  { text-align: right !important; }
