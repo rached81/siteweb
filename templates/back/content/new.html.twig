@@ -9,3 +9,11 @@
     {{ include('back/content/_form.html.twig') }}
 {#    <a  class="btn btn-sm btn-default mt-3"   href="{{ path('app_content_index', {'scope': content.scope}) }}"><<< back to list</a>#}
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'back/partials/_ckeditor_styles.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'back/partials/_ckeditor_scripts.html.twig' %}
+{% endblock %}

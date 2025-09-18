@@ -40,7 +40,8 @@
 {#            'attr': {'class': 'ckeditor'},#}
 {#        }) }}#}
 {#        <div class="ckeditor-wrapper" style="display: none;">#}
-            {{ form_row(form.body, {'attr': {'class': 'ckeditor'}}) }}
+{#            {{ form_row(form.body, {'attr': {'class': 'ckeditor'}}) }}#}
+        {{ form_row(form.body, { attr: { id: 'content_body' } }) }}
 {#        </div>#}
     </div>
 

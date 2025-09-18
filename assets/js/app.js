@@ -27,7 +27,7 @@ document.querySelectorAll('.ckeditor').forEach(el => {
             'undo', 'redo'
         ]
     }).then(editor => {
-        console.log('CKEditor prêt');
+        console.log('CKEditor prêt--');
         el.style.display = 'block';
     }).catch(error => {
         console.error(error);

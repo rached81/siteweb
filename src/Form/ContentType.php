@@ -50,9 +50,7 @@ class ContentType extends AbstractType
             ->add('title', TextType::class, ['required' => true])
             ->add('title', TextType::class, ['required' => true])
             ->add('intro')
-->add('body', TextareaType::class, [
-    'attr' => ['class' => 'ckeditor']
-])
+->add('body', TextareaType::class, [])
 
             ->add('tags', TextType::class,
                 ['attr' => ['data-role' => "tagsinput", 'data-tag-class' => "badge badge-primary", 'class' => "form-control"
