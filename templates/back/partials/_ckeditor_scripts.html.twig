@@ -42,8 +42,8 @@
                 SimpleUploadAdapter
             ],
             toolbar: [
-                'undo','redo','|','heading','bold','italic','link','bulletedList','numberedList','|',
-                'uploadImage',  // 👈 bouton d’upload (pas insertImage)
+                'undo','redo','|','heading','bold','italic', 'link', 'strikethrough','bulletedList','numberedList','|',
+                'uploadImage', 'uploadFile', 'mediaEmbed', '|',  // 👈 bouton d’upload (pas insertImage)
                 'blockQuote','insertTable','codeBlock','sourceEditing','|',
                 'alignment','|','fontSize','fontFamily','fontColor'
             ],
@@ -57,6 +57,9 @@
                 uploadUrl: '/back/upload/ckeditor',
                 withCredentials: false
                 // headers: { 'X-CSRF-TOKEN': '...' } // si tu mets du CSRF
+            },
+            mediaEmbed: {
+                previewsInData: true
             }
         })
             .then(editor => {
