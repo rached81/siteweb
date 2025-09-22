@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -68,6 +69,10 @@ class ContentType extends AbstractType
         ['data-tag-class' => "badge badge-primary", 'class' => "form-control"],
 
             ])
+//            ->add('picture', CollectionType::class, [
+//                'entry_type' => ArticleImageType::class,
+//                'allow_add' => true, 'allow_delete' => true, 'by_reference' => false,
+//            ])
         ;
     }
 

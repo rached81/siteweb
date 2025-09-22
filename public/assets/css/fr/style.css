@@ -519,7 +519,7 @@ kbd kbd {
 pre {
   display: block;
   font-size: 87.5%;
-  color: #212529;Roboto
+  color: #212529;
   font-size: inherit;
   color: inherit;
   word-break: normal;
@@ -9194,4 +9194,22 @@ h3 {
 
 .float-right {
   float: right !important;
+}
+/* Neutraliser le .media de Bootstrap pour le contenu CKEditor */
+.article-body figure.media {
+  display: block !important;           /* au lieu de display:flex */
+}
+
+/* sécuriser le conteneur ratio */
+.article-body figure.media > div {
+  width: 100% !important;
+}
+
+/* si jamais un reset global perturbe l’iframe */
+.article-body figure.media iframe {
+  width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto;                        /* ou height:100% si vous gardez le wrapper "padding-bottom" */
+  display: block;
+  border: 0;
 }

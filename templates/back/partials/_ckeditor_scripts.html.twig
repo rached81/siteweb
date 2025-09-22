@@ -12,12 +12,13 @@
     //curl -F "upload=@/c/Users/rached.benkhalifa/Pictures/Saved Pictures/aad-to-declaration-employeur.PNG" http://127.0.0.1:8000/upload/ckeditor
 
     import { ClassicEditor } from 'ckeditor5';
+
     import {
         SourceEditing, Essentials, Autoformat, Alignment,
         Bold, Italic, Strikethrough, Font, BlockQuote, Heading,
-        Link, List, Paragraph, CodeBlock, Highlight, Table
+        Link, List, Paragraph, CodeBlock, Highlight, Table, MediaEmbed, GeneralHtmlSupport
     } from 'ckeditor5';
-
+    // import { MediaEmbed } from 'ckeditor5';
     // Images + upload (✅ sans elFinder)
     import { Image, ImageUpload, ImageCaption, ImageStyle, ImageResize, ImageToolbar } from 'ckeditor5';
     import { SimpleUploadAdapter } from 'ckeditor5';
@@ -35,17 +36,31 @@
             },
             licenseKey:'GPL',
             plugins: [
-                SourceEditing, Essentials, Autoformat,
+                SourceEditing, Essentials, Autoformat, MediaEmbed,
                 Bold, Italic, Strikethrough, BlockQuote, Heading, Link, List, Paragraph,
                 Highlight, CodeBlock, Alignment, Font, Table,
                 Image, ImageCaption, ImageStyle, ImageToolbar, ImageResize, ImageUpload,
-                SimpleUploadAdapter
+                SimpleUploadAdapter,
+                GeneralHtmlSupport,
             ],
+            htmlSupport: {
+                allow: [
+                    { name: 'video', attributes: true, classes: true, styles: true },
+                    { name: 'source', attributes: true },
+                    { name: 'div', classes: [ 'video-embed' ] },
+                    {
+                        name: 'iframe',
+                        attributes: true,
+                        classes: true,
+                        styles: true
+                    }
+                ]
+            },
             toolbar: [
                 'undo','redo','|','heading','bold','italic', 'link', 'strikethrough','bulletedList','numberedList','|',
-                'uploadImage', 'uploadFile', 'mediaEmbed', '|',  // 👈 bouton d’upload (pas insertImage)
+                'uploadImage', 'mediaEmbed', '|',  // 👈 bouton d’upload (pas insertImage)
                 'blockQuote','insertTable','codeBlock','sourceEditing','|',
-                'alignment','|','fontSize','fontFamily','fontColor'
+                'alignment','|','fontSize','fontFamily','fontColor',
             ],
             image: {
                 toolbar: [

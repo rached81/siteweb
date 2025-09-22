@@ -9152,3 +9152,41 @@ h3 {
 .float-right {
   float: right !important;
 }
+
+.main-container {
+  width: 795px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.video-embed {
+  width: 100%;
+  /* pour éviter qu’un parent flex réduise la hauteur */
+  display: block;
+}
+
+.video-embed iframe {
+  width: 100%;
+  /* le point clé */
+  aspect-ratio: 16 / 9;
+  height: auto;            /* laissé à auto, le ratio calcule la hauteur */
+  display: block;
+  max-width: 100%;
+}
+/* Neutraliser le .media de Bootstrap pour le contenu CKEditor */
+.article-body figure.media {
+  display: block !important;           /* au lieu de display:flex */
+}
+
+/* sécuriser le conteneur ratio */
+.article-body figure.media > div {
+  width: 100% !important;
+}
+
+/* si jamais un reset global perturbe l’iframe */
+.article-body figure.media iframe {
+  width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto;                        /* ou height:100% si vous gardez le wrapper "padding-bottom" */
+  display: block;
+  border: 0;
+}
