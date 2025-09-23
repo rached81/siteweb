@@ -1,42 +1,46 @@
 {# templates/back/content/_form.html.twig #}
-{% trans_default_domain 'forms' %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
+{# Fallback du lien "retour à la liste" si non fourni #}
 {% set scope = app.session.get('current_scope') %}
 {% set back_href = back_href is defined
     ? back_href
-    : (scope ? path('app_content_index', {'scope': scope.id}) : path('app_content_index')) %}
+    : (scope is not null ? path('app_content_index', {'scope': scope.id}) : path('app_content_index')) %}
 
 {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
 
+{# ===== Barre d’actions sticky (haut) ===== #}
 <div class="action-bar sticky-top py-2 mb-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-    <a href="{{ back_href }}" class="btn btn-light btn-sm">{{ 'form.actions.back'|trans }}</a>
-    <div>
-        <button type="submit" name="save" class="btn btn-primary btn-sm">
-            {{'form.actions.save'|trans }}
+    <a href="{{ back_href }}" class="btn btn-light btn-sm">← Retour à la liste</a>
+
+    <div class="d-flex align-items-center">
+        <button type="submit" name="save" class="btn btn-primary btn-sm mr-2">
+            {{ button_label|default('Enregistrer') }}
         </button>
         {% if is_edit is not defined or not is_edit %}
             <button type="submit" name="save_continue" value="1" class="btn btn-outline-primary btn-sm">
-                {{ 'form.actions.save_continue'|trans }}
+                Enregistrer & continuer
             </button>
         {% endif %}
     </div>
 </div>
 
+{# Erreurs globales #}
 {{ form_errors(form) }}
 
 <div class="row">
+    {# ===== Colonne gauche : Contenu ===== #}
     <div class="col-lg-8">
         <div class="card mb-3">
-            <div class="card-header"><strong>{{ 'form.sections.main'|trans }}</strong></div>
+            <div class="card-header"><strong>Informations principales</strong></div>
             <div class="card-body">
                 {{ form_row(form.title) }}
                 {{ form_row(form.intro) }}
                 {{ form_row(form.body, { attr: { id: 'content_body' } }) }}
 
-                {% if scope and scope.id == 15 %}
+                {% if scope is not null and scope.id == 15 %}
                     <div class="mt-2">
-                        <a class="btn btn-sm btn-secondary" href="#" id="load_gallery">{{ 'Charger une galerie'|trans }}</a>
+                        <a class="btn btn-sm btn-secondary" href="#" id="load_gallery">Charger une galerie</a>
                         <input type="hidden" id="content_scope" value="{{ scope.id }}">
                         <input type="hidden" id="content_id" value="{{ content.id }}">
                     </div>
@@ -45,32 +49,33 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-header"><strong>{{ 'form.sections.tags'|trans }}</strong></div>
+            <div class="card-header"><strong>Mots-clés</strong></div>
             <div class="card-body">
                 {{ form_row(form.tags) }}
             </div>
         </div>
     </div>
 
+    {# ===== Colonne droite : Métadonnées ===== #}
     <div class="col-lg-4">
         <div class="card mb-3">
-            <div class="card-header"><strong>{{ 'form.sections.scope'|trans }}</strong></div>
+            <div class="card-header"><strong>Rubrique</strong></div>
             <div class="card-body">
                 {{ form_row(form.scope) }}
             </div>
         </div>
 
         <div class="card mb-3">
-            <div class="card-header"><strong>{{ 'form.sections.publish'|trans }}</strong></div>
+            <div class="card-header"><strong>Publication</strong></div>
             <div class="card-body">
                 {{ form_row(form.published_date) }}
-                {{ form_row(form.fullWidth) }}
-                {{ form_row(form.published) }}
+                {{ form_row(form.fullWidth, { label: 'Article pleine largeur' }) }}
+                {{ form_row(form.published, { label: 'Publié' }) }}
             </div>
         </div>
 
         <div class="card mb-3">
-            <div class="card-header"><strong>{{ 'form.sections.picture'|trans }}</strong></div>
+            <div class="card-header"><strong>Image à la une</strong></div>
             <div class="card-body">
                 {{ form_widget(form.picture) }}
                 {% if content.picture %}
@@ -83,15 +88,17 @@
     </div>
 </div>
 
+{# ===== Barre d’actions (bas) ===== #}
 <div class="action-bar py-3 mt-3 bg-white border-top d-flex justify-content-between align-items-center">
-    <a href="{{ back_href }}" class="btn btn-light">{{ 'form.actions.back'|trans }}</a>
+    <a href="{{ back_href }}" class="btn btn-light">← Retour à la liste</a>
+
     <div>
         <button type="submit" name="save" class="btn btn-primary">
-            {{ 'form.actions.save'|trans }}
+            {{ button_label|default('Enregistrer') }}
         </button>
         {% if is_edit is not defined or not is_edit %}
             <button type="submit" name="save_continue" value="1" class="btn btn-outline-primary">
-                {{ 'form.actions.save_continue'|trans }}
+                Enregistrer & continuer
             </button>
         {% endif %}
     </div>

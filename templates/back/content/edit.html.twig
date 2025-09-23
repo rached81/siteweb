@@ -1,10 +1,11 @@
 {% extends 'back/base.html.twig' %}
 
-{% block title %} {% trans %}Edit Content  {% endtrans %} {% endblock %}
-
 {% block body %}
-
-    <h1>{% trans %}Edit Content  {% endtrans %}</h1>
+    {% block title %}{{ 'form.pages.edit_title'|trans({}, 'forms') }}{% endblock %}
+    {% set isRtl = app.request.locale == 'ar' %}
+<section class="{{ isRtl ? 'rtl-scope' : '' }}" lang="{{ isRtl ? 'ar' : app.request.locale }}">
+    <h1>{{ 'form.pages.edit_title'|trans({}, 'forms') }}</h1>
+{#    <h1>{% trans %}Edit Content  {% endtrans %}</h1>#}
   {# langue_db {{dump(lang_db)}}
     loc_url {{dump(loc_url)}}
       article {{dump(art)}}
@@ -30,10 +31,12 @@
     {% if currentScope is not null %}
     <a class="btn btn-sm btn-default" href="{{ path('app_content_index', {'scope': app.session.get('current_scope').id}) }}"><<< &nbsp;back to list</a>
     {% endif %}
+</section>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     {% include 'back/partials/_ckeditor_styles.html.twig' %}
+    {% include 'back/partials/_rtl_scope_styles.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

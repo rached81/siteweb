@@ -80,6 +80,8 @@ class ContentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Content::class,
+            'translation_domain' => 'forms',         // <= domaine des libellés/helps/placeholders
+            'label_format' => 'form.content.%name%', // <= clé par défaut de chaque champ
         ]);
     }
 }

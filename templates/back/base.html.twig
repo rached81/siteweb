@@ -1,5 +1,7 @@
 <!doctype html>
 <html class="fixed">
+      lang="{{ app.request.locale }}"
+      dir="{{ app.request.locale in ['ar','fa','he'] ? 'rtl' : 'ltr' }}">
 <head>
     <!-- Basic -->
     <meta charset="UTF-8">
@@ -36,6 +38,9 @@
     <link rel="stylesheet" href="{{ asset('css/skins/default.css') }}"/>
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    {% if app.request.locale == 'ar' %}
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+    {% endif %}
     <!-- Head Libs -->
     <script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
     <script src="{{ asset('master/style-switcher/style.switcher.localstorage.js') }}"></script>

@@ -1,0 +1,66 @@
+<style>
+    /* Scope RTL uniquement pour le bloc formulaire/titre */
+    .rtl-scope { direction: rtl; }
+
+    /* Échelle typographique AR plus grande (sans toucher au reste du site) */
+    .rtl-scope { --ar-scale: 1.10; } /* ≈ +10% */
+    .rtl-scope,
+    .rtl-scope .card,
+    .rtl-scope .card-body,
+    .rtl-scope .card-header { font-size: calc(1rem * var(--ar-scale)); }
+
+    .rtl-scope .page-title {
+        text-align: right;
+        font-size: calc(1.25rem * var(--ar-scale)); /* h1 un peu plus grand */
+        line-height: 1.6;
+    }
+
+    /* Polices (si chargées) : Tajawal UI, Noto Naskh pour le corps */
+    .rtl-scope label,
+    .rtl-scope .card-header,
+    .rtl-scope .btn { font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+    .rtl-scope .form-control,
+    .rtl-scope .ck-content,
+    .rtl-scope .form-text { font-family: "Noto Naskh Arabic", "Tajawal", "Noto Sans Arabic", system-ui, Arial, sans-serif; }
+
+    /* Alignements AR */
+    .rtl-scope label,
+    .rtl-scope .form-text,
+    .rtl-scope .card-header { text-align: right; }
+    .rtl-scope .form-control,
+    .rtl-scope .ck-content { direction: rtl; text-align: right; }
+
+    /* Confort lecture */
+    .rtl-scope .form-control {
+        line-height: 1.9;
+        padding-top: .6rem; padding-bottom: .6rem;
+    }
+    .rtl-scope .ck-editor__editable[role="textbox"],
+    .rtl-scope .ck-content {
+        font-size: calc(1rem * var(--ar-scale));
+        line-height: 1.9;
+    }
+
+    /* Boutons : espacement en RTL */
+    .rtl-scope .action-bar .btn + .btn { margin-right: .5rem; margin-left: 0; }
+
+    /* Cases à cocher / switches */
+    .rtl-scope .form-check { padding-right: 1.5rem; padding-left: 0; text-align: right; }
+    .rtl-scope .form-check-input { float: right; margin-right: -1.5rem; margin-left: 0; }
+
+    /* Champs à garder en LTR (utilisabilité) */
+    .rtl-scope input[type="email"],
+    .rtl-scope input[type="url"],
+    .rtl-scope input[type="tel"],
+    .rtl-scope input[type="number"],
+    .rtl-scope input[type="date"],
+    .rtl-scope input[type="time"],
+    .rtl-scope input[type="datetime-local"] {
+        direction: ltr;
+        text-align: left;
+    }
+
+    /* Évite conflit Bootstrap .media pour les iframes YouTube insérées depuis CKEditor */
+    .rtl-scope figure.media { display: block !important; }
+
+</style>

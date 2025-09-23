@@ -1,0 +1,25 @@
+form:
+  actions:
+    back: "← الرجوع إلى القائمة"
+    save: "حفظ"
+    save_continue: "حفظ ومتابعة"
+    update: "تحديث"
+  sections:
+    main: "المعلومات الأساسية"
+    tags: "الوسوم"
+    scope: "الفئة"
+    publish: "النشر"
+    picture: "الصورة الرئيسية"
+  content:
+    title: "العنوان"
+    scope: "الفئة"
+    intro: "المقدمة"
+    body: "المحتوى"
+    tags: "الوسوم"
+    picture: "الصورة الرئيسية"
+    published_date: "تاريخ النشر"
+    published: "منشور"
+    fullWidth: "مقال بعرض كامل"
+  pages:
+    create_title: "إنشاء مقال"
+    edit_title: "تعديل المقال"

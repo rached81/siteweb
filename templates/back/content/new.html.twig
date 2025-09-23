@@ -1,10 +1,12 @@
 {% extends 'back/base.html.twig' %}
 
-{% block title %}Créer un article{% endblock %}
+{% block title %}{{ 'form.pages.create_title'|trans({}, 'forms') }}{% endblock %}
 
 {% block body %}
-    <h1>Créer un article</h1>
-
+{#    <h1>Créer un article</h1>#}
+    {% set isRtl = app.request.locale == 'ar' %}
+<section class="{{ isRtl ? 'rtl-scope' : '' }}" lang="{{ isRtl ? 'ar' : app.request.locale }}">
+    <h1>{{ 'form.pages.create_title'|trans({}, 'forms') }}</h1>
     {# on passe les variables qui changent #}
     {{ include('back/content/_form.html.twig', {
         button_label: 'Créer',
@@ -12,11 +14,13 @@
         back_href: scope is defined and scope ? path('app_content_index', {'scope': scope.id})
         : path('app_content_index')
     }) }}
+</section>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     {% include 'back/partials/_ckeditor_styles.html.twig' %}
+    {% include 'back/partials/_rtl_scope_styles.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

@@ -1,0 +1,25 @@
+form:
+  actions:
+    back: "← Retour à la liste"
+    save: "Enregistrer"
+    save_continue: "Enregistrer & continuer"
+    update: "Mettre à jour"
+  sections:
+    main: "Informations principales"
+    tags: "Mots-clés"
+    scope: "Rubrique"
+    publish: "Publication"
+    picture: "Image à la une"
+  content:
+    title: "Titre"
+    scope: "Rubrique"
+    intro: "Intro"
+    body: "Contenu"
+    tags: "Tags"
+    picture: "Image à la une"
+    published_date: "Date de publication"
+    published: "Publié"
+    fullWidth: "Article pleine largeur"
+  pages:
+    create_title: "Créer un article"
+    edit_title: "Modifier l’article"

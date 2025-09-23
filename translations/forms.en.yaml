@@ -1,0 +1,25 @@
+form:
+  actions:
+    back: "← Back to list"
+    save: "Save"
+    save_continue: "Save & continue"
+    update: "Update"
+  sections:
+    main: "Main information"
+    tags: "Tags"
+    scope: "Scope"
+    publish: "Publishing"
+    picture: "Featured image"
+  content:
+    title: "Title"
+    scope: "Scope"
+    intro: "Intro"
+    body: "Body"
+    tags: "Tags"
+    picture: "Featured image"
+    published_date: "Publish date"
+    published: "Published"
+    fullWidth: "Full-width article"
+  pages:
+    create_title: "Create article"
+    edit_title: "Edit article"
