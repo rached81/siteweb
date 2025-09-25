@@ -6,7 +6,7 @@ form:
     update: "تحديث"
   sections:
     main: "المعلومات الأساسية"
-    tags: "الوسوم"
+    tags: "كلمات مفتاحية"
     scope: "الفئة"
     publish: "النشر"
     picture: "الصورة الرئيسية"
@@ -15,7 +15,7 @@ form:
     scope: "الفئة"
     intro: "المقدمة"
     body: "المحتوى"
-    tags: "الوسوم"
+    tags: "كلمات مفتاحية"
     picture: "الصورة الرئيسية"
     published_date: "تاريخ النشر"
     published: "منشور"
@@ -23,3 +23,22 @@ form:
   pages:
     create_title: "إنشاء مقال"
     edit_title: "تعديل المقال"
+  attachments:
+    quick:
+      title: "رفع ملف/صورة"
+      autocopy: "سيتم نسخ المسار تلقائيًا"
+      partial_path: "المسار الجزئي"
+      hint: "الصق هذا المسار حيث تريد (رابط للمرفق)."
+      btn:
+        upload: "رفع ملف…"
+        copy: "نسخ"
+        insert: "إدراج في المحرر"
+        insert_title: "إدراج رابط الملف في المحرر"
+      status:
+        sending: "جارٍ الرفع…"
+        done: "تم رفع الملف. تم نسخ المسار."
+        copied: "تم النسخ ✅"
+        copy_fail: "تعذر النسخ تلقائياً."
+        editor_missing: "لم يتم العثور على المحرر: الصق المسار يدويًا."
+        inserted: "تم إدراج الرابط في المحرر ✅"
+

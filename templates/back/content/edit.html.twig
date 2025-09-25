@@ -1,7 +1,7 @@
 {% extends 'back/base.html.twig' %}
 
-{% block body %}
     {% block title %}{{ 'form.pages.edit_title'|trans({}, 'forms') }}{% endblock %}
+{% block body %}
     {% set isRtl = app.request.locale == 'ar' %}
 <section class="{{ isRtl ? 'rtl-scope' : '' }}" lang="{{ isRtl ? 'ar' : app.request.locale }}">
     <h1>{{ 'form.pages.edit_title'|trans({}, 'forms') }}</h1>
@@ -41,6 +41,133 @@
 
 {% block javascripts %}
     {% include 'back/partials/_ckeditor_scripts.html.twig' %}
+
+    <script>
+        (function() {
+            const box = document.getElementById('quick-uploader');
+            if (!box) return;
+
+            const UPLOAD_URL = box.dataset.uploadUrl; // -> {{ path('ck_upload') }}
+
+            const $input    = box.querySelector('#inputUpload');
+            const $status   = box.querySelector('#uploadStatus');
+            const $wrapOut  = box.querySelector('#uploadedPathWrap');
+            const $out      = box.querySelector('#uploadedPath');
+            const $copy     = box.querySelector('#btnCopy');
+            const $insert   = box.querySelector('#btnInsert');
+            const $progress = box.querySelector('#uploadProgress');
+            const $bar      = $progress.querySelector('.progress-bar');
+
+            let lastFilename = null;
+
+            // Quand un fichier est choisi
+            $input.addEventListener('change', () => {
+                const file = $input.files && $input.files[0];
+                if (!file) return;
+                upload(file);
+                $input.value = '';
+            });
+
+            async function upload(file) {
+                $status.textContent = "{{ 'form.attachments.quick.status.sending'|trans }}";
+                $wrapOut.classList.add('d-none');
+                $progress.classList.remove('d-none');
+                $bar.style.width = '0%';
+                $bar.classList.remove('bg-danger','bg-success');
+
+                try {
+                    const fd = new FormData();
+                    fd.append('upload', file); // clé attendue côté serveur
+
+                    const partialPath = await xhrUpload(UPLOAD_URL, fd, pct => {
+                        $bar.style.width = pct + '%';
+                    });
+
+                    lastFilename = file.name;
+                    $out.value = partialPath;
+                    $wrapOut.classList.remove('d-none');
+                    $status.textContent = "{{ 'form.attachments.quick.status.done'|trans }}";
+                    $bar.classList.add('bg-success');
+
+                    // Copie auto
+                    try { await navigator.clipboard.writeText(partialPath); } catch (_) {}
+                } catch (e) {
+                    console.error(e);
+                    $status.textContent = 'Erreur: ' + (e?.message || 'upload');
+                    $bar.classList.add('bg-danger');
+                } finally {
+                    setTimeout(() => { $progress.classList.add('d-none'); $bar.style.width = '0%'; }, 600);
+                }
+            }
+
+            // Upload avec progression via XHR
+            function xhrUpload(url, formData, onProgress) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+
+                    xhr.upload.addEventListener('progress', (e) => {
+                        if (e.lengthComputable && typeof onProgress === 'function') {
+                            const pct = Math.max(5, Math.round(e.loaded * 100 / e.total));
+                            onProgress(pct);
+                        }
+                    });
+
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState !== 4) return;
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            try {
+                                const data = JSON.parse(xhr.responseText || '{}');
+                                const full = data.url || data.default;
+                                if (!full) throw new Error('Réponse invalide (pas d’URL).');
+                                const partial = new URL(full, window.location.origin).pathname;
+                                resolve(partial);
+                            } catch (err) { reject(err); }
+                        } else {
+                            reject(new Error('HTTP ' + xhr.status));
+                        }
+                    };
+
+                    xhr.onerror = () => reject(new Error('Réseau'));
+                    xhr.send(formData);
+                });
+            }
+
+            // Copier
+            if ($copy) $copy.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText($out.value || '');
+                    $status.textContent = "{{ 'form.attachments.quick.status.copied'|trans }}";
+                    setTimeout(() => $status.textContent = '', 1200);
+                } catch (_) {
+                    $status.textContent = "{{ 'form.attachments.quick.status.copy_fail'|trans }}";
+                }
+            });
+
+            // Insérer dans l'éditeur (optionnel)
+            if ($insert) $insert.addEventListener('click', () => {
+                const editor = window._editorRef;
+                const href = $out.value;
+                if (!href) return;
+                if (!editor) {
+                    $status.textContent = "{{ 'form.attachments.quick.status.editor_missing'|trans }}";
+                    return;
+                }
+                editor.model.change(writer => {
+                    const sel = editor.model.document.selection;
+                    if (sel.isCollapsed) {
+                        const text = ({{ app.request.locale == 'ar' ? "'ملف'" : "'Pièce jointe'" }}) + ' - ' + (href.split('/').pop());
+                        writer.insertText(text, { linkHref: href }, sel.getFirstPosition());
+                    } else {
+                        editor.execute('link', href);
+                    }
+                });
+                $status.textContent = "{{ 'form.attachments.quick.status.inserted'|trans }}";
+                setTimeout(() => $status.textContent = '', 1200);
+            });
+        })();
+    </script>
 {% endblock %}
+
 
 

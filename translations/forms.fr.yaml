@@ -23,3 +23,21 @@ form:
   pages:
     create_title: "Créer un article"
     edit_title: "Modifier l’article"
+  attachments:
+    quick:
+      title: "Uploader un fichier / image"
+      autocopy: "Le chemin sera copié automatiquement"
+      partial_path: "Chemin partiel"
+      hint: "Collez ce chemin où vous voulez (lien vers pièce jointe)."
+      btn:
+        upload: "Uploader un fichier…"
+        copy: "Copier"
+        insert: "Insérer dans l’éditeur"
+        insert_title: "Insérer un lien vers le fichier dans l’éditeur"
+      status:
+        sending: "Envoi en cours…"
+        done: "Fichier envoyé. Chemin copié."
+        copied: "Chemin copié ✅"
+        copy_fail: "Impossible de copier automatiquement."
+        editor_missing: "Éditeur non détecté : collez le chemin où vous voulez."
+        inserted: "Lien inséré dans l’éditeur ✅"

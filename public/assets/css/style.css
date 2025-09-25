@@ -9190,3 +9190,16 @@ h3 {
   display: block;
   border: 0;
 }
+h3{
+  color: #0f66ad!important;
+  font-family: "CenturyGothic";
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+/* Si tu es en Bootstrap 4, ajoute cette utilitaire */
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
