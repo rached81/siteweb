@@ -23,22 +23,15 @@ form:
   pages:
     create_title: "إنشاء مقال"
     edit_title: "تعديل المقال"
-  attachments:
-    quick:
-      title: "رفع ملف/صورة"
-      autocopy: "سيتم نسخ المسار تلقائيًا"
-      partial_path: "المسار الجزئي"
-      hint: "الصق هذا المسار حيث تريد (رابط للمرفق)."
-      btn:
-        upload: "رفع ملف…"
-        copy: "نسخ"
-        insert: "إدراج في المحرر"
-        insert_title: "إدراج رابط الملف في المحرر"
-      status:
-        sending: "جارٍ الرفع…"
-        done: "تم رفع الملف. تم نسخ المسار."
-        copied: "تم النسخ ✅"
-        copy_fail: "تعذر النسخ تلقائياً."
-        editor_missing: "لم يتم العثور على المحرر: الصق المسار يدويًا."
-        inserted: "تم إدراج الرابط في المحرر ✅"
+  toolbox:
+    title: "صندوق الأدوات"
+    subtitle: "رفع و اختصارات"
+    toggle: "فتح/إغلاق صندوق الأدوات"
+    collapse: تصغير
+    close: إغلاق
+    attachments:
+      quick:
+        copied: تم نسخ المسار
+        copy_manual: انسخ يدوياً إن لزم.
+        inserted: أُدرج في المحتوى
 

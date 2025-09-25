@@ -1,0 +1,144 @@
+<script>
+    (function() {
+        const root   = document.getElementById('content-form-toolbox');
+        if (!root) return;
+
+        const box      = root.querySelector('#toolbox');
+        const toggle   = root.querySelector('#toolboxToggle');
+        const closeBtn = root.querySelector('#tbClose');
+        const colBtn   = root.querySelector('#tbCollapse');
+        const body     = root.querySelector('#toolboxBody');
+
+        const input      = root.querySelector('#inputUpload');
+        const progWrap   = root.querySelector('#uploadProgress');
+        const progBar    = progWrap?.querySelector('.progress-bar');
+        const statusEl   = root.querySelector('#uploadStatus');
+        const pathWrap   = root.querySelector('#uploadedPathWrap');
+        const pathInput  = root.querySelector('#uploadedPath');
+        const btnCopy    = root.querySelector('#btnCopy');
+        const btnInsert  = root.querySelector('#btnInsert');
+
+        const uploadUrl  = root.dataset.uploadUrl;
+        const csrf       = document.querySelector('meta[name="csrf-token"]')?.content || null;
+
+        // --- Etat persistant
+        const KEY = 'toolbox.state';
+        let state = { hidden:false, collapsed:false };
+        try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
+
+        function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+        function apply(){
+            box.classList.toggle('is-hidden', !!state.hidden);
+            body.style.display = state.collapsed ? 'none' : '';
+            colBtn.textContent = state.collapsed ? '+' : '—';
+            toggle.setAttribute('aria-expanded', (!state.hidden).toString());
+        }
+        function setHidden(v){ state.hidden = !!v; apply(); save(); }
+        function setCollapsed(v){ state.collapsed = !!v; apply(); save(); }
+
+        apply();
+
+        toggle.addEventListener('click', () => setHidden(!state.hidden));
+        closeBtn.addEventListener('click', () => setHidden(true));
+        colBtn.addEventListener('click', () => setCollapsed(!state.collapsed));
+
+        // --- Upload
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            statusEl.textContent = '';
+            progBar.style.width = '0%';
+            progWrap.classList.remove('d-none');
+
+            const fd = new FormData();
+            fd.append('upload', file);
+
+            try {
+                const res = await fetch(uploadUrl, {
+                    method: 'POST',
+                    headers: csrf ? { 'X-CSRF-TOKEN': csrf } : {},
+                    body: fd
+                });
+
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                // on essaie json, puis texte brut
+                let data;
+                const ct = res.headers.get('content-type') || '';
+                if (ct.includes('application/json')) {
+                    data = await res.json();
+                } else {
+                    data = { url: await res.text() };
+                }
+
+                const url = (data.path || data.url || '').toString();
+                if (!url) throw new Error('No URL in response');
+
+                progBar.style.width = '100%';
+                statusEl.textContent = '';
+
+                // Affichage + auto-copy
+                pathInput.value = url;
+                pathWrap.classList.remove('d-none');
+                try {
+                    await navigator.clipboard.writeText(url);
+                    statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans|e("js") }}';
+                } catch(_){ /* ignore */ }
+            } catch(err) {
+                statusEl.textContent = '{{ "form.toolbox.attachments.quick.error"|trans|e("js") }}';
+                console.error(err);
+            } finally {
+                setTimeout(() => { progWrap.classList.add('d-none'); }, 400);
+                input.value = '';
+            }
+        });
+
+        // Pour avoir une progression “visuelle” même sans progress events serveurs
+        const _oldFetch = window.fetch;
+        window.fetch = function(url, opts) {
+            if (url === uploadUrl && progBar) {
+                progBar.style.width = '25%';
+                return _oldFetch(url, opts).then(r => {
+                    progBar.style.width = '80%';
+                    return r;
+                });
+            }
+            return _oldFetch(url, opts);
+        }
+
+        // Copier
+        btnCopy.addEventListener('click', async () => {
+            if (!pathInput.value) return;
+            try {
+                await navigator.clipboard.writeText(pathInput.value);
+                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans|e("js") }}';
+            } catch(e) {
+                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copy_manual"|trans|e("js") }}';
+            }
+        });
+
+        // Insérer dans CKEditor (image => <img>, sinon => <a>)
+        btnInsert.addEventListener('click', () => {
+            const url = pathInput.value;
+            if (!url || !window.CKEDITOR_INSTANCE) return;
+
+            const editor = window.CKEDITOR_INSTANCE;
+
+            // devine si image
+            const isImage = /\.(png|jpe?g|gif|webp|svg)$/i.test(url);
+            const name = url.split('/').pop();
+
+            const html = isImage
+                ? `<p><img src="${url}" alt="${name}"></p>`
+                : `<p><a href="${url}" target="_blank" rel="noopener">${name}</a></p>`;
+
+            const viewFrag  = editor.data.processor.toView(html);
+            const modelFrag = editor.data.toModel(viewFrag);
+
+            editor.model.change( writer => {
+                editor.model.insertContent( modelFrag, editor.model.document.selection );
+            });
+
+            statusEl.textContent = '{{ "form.toolbox.attachments.quick.inserted"|trans|e("js") }}';
+        });
+    })();
+</script>

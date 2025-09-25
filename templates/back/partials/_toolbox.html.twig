@@ -1,0 +1,119 @@
+{# --- TOOLBOX FLOTTANTE : visible uniquement sur ce form --- #}
+<div id="content-form-toolbox"
+     class="content-form-toolbox"
+     data-locale="{{ app.request.locale }}"
+     data-upload-url="{{ path('ck_upload') }}"
+     aria-live="polite">
+
+    <!-- Bouton rond flottant -->
+    <button id="toolboxToggle"
+            class="btn btn-primary btn-sm"
+            type="button"
+            title="{{ 'form.toolbox.toggle'|trans({}, 'forms') }}"
+            aria-controls="toolbox"
+            aria-expanded="true">
+        🧰
+    </button>
+
+    <!-- Boîte à outils -->
+    <div id="toolbox" class="toolbox card shadow-sm">
+        <div class="card-header d-flex align-items-center">
+            <strong class="me-2">{{ 'form.toolbox.title'|trans({}, 'forms') }}</strong>
+            <small class="text-muted">{{ 'form.toolbox.subtitle'|trans({}, 'forms') }}</small>
+            <div class="ms-auto btn-group btn-group-sm">
+                <button class="btn btn-light" type="button" id="tbCollapse" title="{{ 'form.toolbox.collapse'|trans({}, 'forms') }}">—</button>
+                <button class="btn btn-light" type="button" id="tbClose"    title="{{ 'form.toolbox.close'|trans({}, 'forms') }}">×</button>
+            </div>
+        </div>
+
+        <div class="card-body p-2" id="toolboxBody">
+            {# >>> Ton “quick uploader” existant, inchangé, donc traductions conservées <<< #}
+            <div id="quick-uploader">
+                <div class="d-flex align-items-center flex-wrap" style="gap:.5rem">
+                    <label for="inputUpload" class="btn btn-sm btn-outline-secondary mb-0" id="btnUpload">
+                        {{ 'form.toolbox.attachments.quick.btn.upload'|trans({}, 'forms') }}
+                    </label>
+
+                    <input type="file"
+                           id="inputUpload"
+                           class="visually-hidden"
+                           accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.txt"/>
+
+                    <div id="uploadProgress" class="progress d-none" style="min-width:220px; width:320px;">
+                        <div class="progress-bar" role="progressbar" style="width:0%"></div>
+                    </div>
+
+                    <span id="uploadStatus" class="small text-muted"></span>
+                </div>
+
+                <div id="uploadedPathWrap" class="mt-3 d-none">
+                    <label class="small text-muted mb-1">{{ 'form.toolbox.attachments.quick.partial_path'|trans({}, 'forms') }}</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="uploadedPath" readonly>
+                        <button class="btn btn-sm btn-outline-primary" id="btnCopy"   type="button">
+                            {{ 'form.toolbox.attachments.quick.btn.copy'|trans({}, 'forms') }}
+                        </button>
+                        <button class="btn btn-sm btn-outline-success" id="btnInsert" type="button"
+                                title="{{ 'form.toolbox.attachments.quick.btn.insert_title'|trans({}, 'forms') }}">
+                            {{ 'form.toolbox.attachments.quick.btn.insert'|trans({}, 'forms') }}
+                        </button>
+                    </div>
+                    <div class="small text-muted mt-1" id="uploadTips">{{ 'form.toolbox.attachments.quick.hint'|trans({}, 'forms') }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* ====== TOOLBOX flottante : centrage vertical ====== */
+
+    /* Bouton rond flottant – centré verticalement */
+    #content-form-toolbox #toolboxToggle{
+        position: fixed;
+        top: 50%;
+        right: 14px;            /* côté droit en LTR */
+        transform: translateY(-50%);
+        bottom: auto;
+        z-index: 1061;
+        border-radius: 999px;
+        width: 40px; height: 40px;
+        padding: 0; display: grid; place-items: center;
+    }
+
+    /* Panneau – centré verticalement, décalé pour ne pas chevaucher le bouton */
+    #content-form-toolbox #toolbox{
+        position: fixed;
+        top: 50%;
+        right: 62px;            /* laisse ~48px pour le bouton */
+        transform: translateY(-50%);
+        width: 360px; max-width: 92vw;
+        background:#fff; border:1px solid rgba(0,0,0,.1);
+        border-radius:.5rem; box-shadow:0 6px 24px rgba(0,0,0,.08);
+        transition: transform .15s ease, opacity .15s ease;
+        z-index: 1060;
+    }
+
+    /* Etat masqué (garde le centrage vertical) */
+    #content-form-toolbox #toolbox.is-hidden{
+        transform: translateY(-50%) scale(.98);
+        opacity: 0; pointer-events: none;
+    }
+
+    /* RTL : côté gauche */
+    html[lang="ar"] #content-form-toolbox #toolboxToggle{ right:auto; left:14px; }
+    html[lang="ar"] #content-form-toolbox #toolbox{ right:auto; left:62px; }
+
+    /* Mobile : on repasse en bas pour gagner de la place */
+    @media (max-width: 991.98px){
+        #content-form-toolbox #toolboxToggle{
+            top: auto; bottom: 14px;
+            transform: none;
+        }
+        #content-form-toolbox #toolbox{
+            top: auto; bottom: 70px;
+            right: 8px; left: 8px; transform: none;
+            width: auto;
+        }
+    }
+
+</style>
