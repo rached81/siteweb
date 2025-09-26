@@ -35,6 +35,7 @@ form:
         copy_manual: "Copiez manuellement si nécessaire."
         inserted: "Inséré dans le contenu"
         partial_path: "Chemin partiel"
+        error: "Erreur: upload impossible"
         hint: "Collez ce chemin où vous voulez (lien vers pièce jointe)."
         btn:
           upload: "Uploader un fichier…"

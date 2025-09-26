@@ -81,10 +81,10 @@
                 pathWrap.classList.remove('d-none');
                 try {
                     await navigator.clipboard.writeText(url);
-                    statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans|e("js") }}';
+                    statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';
                 } catch(_){ /* ignore */ }
             } catch(err) {
-                statusEl.textContent = '{{ "form.toolbox.attachments.quick.error"|trans|e("js") }}';
+                statusEl.textContent =  (err?.message || '{{ "form.toolbox.attachments.quick.error"|trans({}, 'forms')|e("js") }}');
                 console.error(err);
             } finally {
                 setTimeout(() => { progWrap.classList.add('d-none'); }, 400);
@@ -110,9 +110,9 @@
             if (!pathInput.value) return;
             try {
                 await navigator.clipboard.writeText(pathInput.value);
-                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans|e("js") }}';
+                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';
             } catch(e) {
-                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copy_manual"|trans|e("js") }}';
+                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copy_manual"|trans({}, 'forms')|e("js") }}';
             }
         });
 
@@ -138,7 +138,7 @@
                 editor.model.insertContent( modelFrag, editor.model.document.selection );
             });
 
-            statusEl.textContent = '{{ "form.toolbox.attachments.quick.inserted"|trans|e("js") }}';
+            statusEl.textContent = '{{ "form.toolbox.attachments.quick.inserted"|trans({}, 'forms')|e("js") }}';
         });
     })();
 </script>

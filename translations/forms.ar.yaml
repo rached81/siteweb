@@ -32,6 +32,7 @@ form:
     attachments:
       quick:
         copied: تم نسخ المسار
+        error: "رفع الملف غير ممكن"
         copy_manual: انسخ يدوياً إن لزم.
         inserted: أُدرج في المحتوى
 
