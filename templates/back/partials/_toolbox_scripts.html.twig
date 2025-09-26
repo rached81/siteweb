@@ -1,3 +1,4 @@
+
 <script>
     (function() {
         const root   = document.getElementById('content-form-toolbox');
@@ -25,6 +26,32 @@
         const KEY = 'toolbox.state';
         let state = { hidden:false, collapsed:false };
         try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
+        // Copie qui marche en HTTPS (Clipboard API) ET en HTTP (fallback execCommand)
+        async function copyTextAnyContext(text) {
+            if (!text) return false;
+
+            // Contexte sécurisé -> API moderne
+            if (window.isSecureContext && navigator.clipboard?.writeText) {
+                try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+            }
+
+            // Fallback HTTP : textarea invisible + execCommand('copy')
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                return ok;
+            } catch (e) {
+                return false;
+            }
+        }
 
         function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
         function apply(){
@@ -88,6 +115,7 @@
                 console.error(err);
             } finally {
                 setTimeout(() => { progWrap.classList.add('d-none'); }, 400);
+                console.error(err);
                 input.value = '';
             }
         });
@@ -109,8 +137,13 @@
         btnCopy.addEventListener('click', async () => {
             if (!pathInput.value) return;
             try {
-                await navigator.clipboard.writeText(pathInput.value);
-                statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';
+                const ok = await copyTextAnyContext(url);
+                statusEl.textContent = ok
+                    ? '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}'
+                    : 'error';
+
+                {#await navigator.clipboard.writeText(pathInput.value);#}
+                {#statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';#}
             } catch(e) {
                 statusEl.textContent = '{{ "form.toolbox.attachments.quick.copy_manual"|trans({}, 'forms')|e("js") }}';
             }
