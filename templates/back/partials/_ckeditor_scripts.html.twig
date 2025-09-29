@@ -144,8 +144,9 @@
                         w.setAttribute('dir', 'rtl', editor.editing.view.document.getRoot());
                     });
                 }
+                window.CKEDITOR_INSTANCE = editor;
             })
-            .then(editor => { window.CKEDITOR_INSTANCE = editor; /* … */ })
+            // .then(editor => { window.CKEDITOR_INSTANCE = editor; /* … */ })
             .catch(console.error);
     // }
 </script>
