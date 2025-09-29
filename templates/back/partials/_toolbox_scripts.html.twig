@@ -109,10 +109,6 @@
 
                 const ok = await copyTextAnyContext(url);
                 statusEl.textContent = ok ?'{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}': '';
-                {#try {#}
-                {#    await navigator.clipboard.writeText(url);#}
-                {#    statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';#}
-                {#} catch(_){ /* ignore */ }#}
             } catch(err) {
                 statusEl.textContent =  (err?.message || '{{ "form.toolbox.attachments.quick.error"|trans({}, 'forms')|e("js") }}');
                 console.error(err);
@@ -135,21 +131,6 @@
             return _oldFetch(url, opts);
         }
 
-        // Copier
-        {#btnCopy.addEventListener('click', async () => {#}
-        {#    if (!pathInput.value) return;#}
-        {#    try {#}
-        {#        const ok = await copyTextAnyContext(url);#}
-        {#        statusEl.textContent = ok#}
-        {#            ? '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}'#}
-        {#            : 'error';#}
-
-        {#        #}{#await navigator.clipboard.writeText(pathInput.value);#}
-        {#        #}{#statusEl.textContent = '{{ "form.toolbox.attachments.quick.copied"|trans({}, 'forms')|e("js") }}';#}
-        {#    } catch(e) {#}
-        {#        statusEl.textContent = '{{ "form.toolbox.attachments.quick.copy_manual"|trans({}, 'forms')|e("js") }}';#}
-        {#    }#}
-        {#});#}
 
         btnCopy.addEventListener('click', async () => {
             const value = pathInput.value;
