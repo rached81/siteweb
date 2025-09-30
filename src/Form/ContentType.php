@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -48,6 +50,16 @@ class ContentType extends AbstractType
                 },
                 'choice_label' => 'name',
             ])
+//            // Pré-sélection seulement en création
+//    ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+//        $content = $event->getData();
+//        if (!$content || $content->getId()) {
+//            return; // édition => ne pas toucher
+//        }
+//        if (!$content->getScope() && $options['current_scope'] instanceof Scope) {
+//            $event->getForm()->get('scope')->setData($options['current_scope']);
+//        }
+//    })
             ->add('title', TextType::class, ['required' => true])
             ->add('title', TextType::class, ['required' => true])
             ->add('intro')
@@ -82,6 +94,7 @@ class ContentType extends AbstractType
             'data_class' => Content::class,
             'translation_domain' => 'forms',         // <= domaine des libellés/helps/placeholders
             'label_format' => 'form.content.%name%', // <= clé par défaut de chaque champ
+//            'current_scope' => null,
         ]);
     }
 }

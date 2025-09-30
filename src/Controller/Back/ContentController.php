@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Article;
 use App\Entity\Content;
 use App\Entity\Language;
+use App\Entity\Scope;
 use App\Form\ContentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -96,9 +97,42 @@ class ContentController extends AbstractController
     /**
      * @Route("/new", name="app_content_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SluggerInterface $slugger, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
+    public function new(
+        Request $request,
+        ScopeRepository $scopeRepo,
+        SluggerInterface $slugger,
+        LanguageRepository $languageRepository,
+        ContentRepository $contentRepository,
+        CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository): Response
     {
         $content = new Content();
+
+        // Ne PAS écraser en édition / si déjà défini
+        if (!$content->getScope()) {
+            $sessionScope = $request->getSession()->get('current_scope'); // chez toi: un objet, un array ou un id
+
+            $scopeId = null;
+            if ($sessionScope instanceof Scope) {
+                $scopeId = $sessionScope->getId(); // l’objet en session est détaché => on ne le réutilise pas
+            } elseif (is_array($sessionScope) && isset($sessionScope['id'])) {
+                $scopeId = (int) $sessionScope['id'];
+            } elseif (is_numeric($sessionScope)) {
+                $scopeId = (int) $sessionScope;
+            }
+
+            if ($scopeId) {
+                // Recharge une entité **gérée** par Doctrine
+                // (getReference ne fait pas de SELECT, find fait un SELECT)
+                $managedScope = $scopeRepo->find($scopeId);
+                // $managedScope = $em->getReference(Scope::class, $scopeId);
+
+                if ($managedScope) {
+                    $content->setScope($managedScope);
+                }
+            }
+        }
+
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
         $loc_url = $request->get('_locale');
@@ -158,7 +192,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
-//            'scope' => 1
+//            'scope' => $scope
 
         ]);
     }
@@ -432,6 +466,7 @@ class ContentController extends AbstractController
 
     public function validContent(Language $lang, Article $article)
     {
+//        dd(['language' => $lang, 'article' => $article]);
 
         $content = $this->contentRepository->findBy(['language' => $lang, 'article' => $article]);
         if (count($content) === 0) {

@@ -1,76 +1,179 @@
+{# templates/back/content/show.html.twig #}
 {% extends 'back/base.html.twig' %}
+{% trans_default_domain 'back' %}
 
-{% block title %}Content{% endblock %}
+{% block title %}{{ content.title ?: 'content.title_default'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Content</h1>
-    <table class="table">
-        <tbody>
-        {% if  content.id  is defined %}
-            <tr>
-                <th>Id</th>
-                <td>{{ content.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ content.title }}</td>
-            </tr>
-            <tr>
-                <th>Intro</th>
-                <td>{{ content.intro }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td> <div class="">
-                <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ content.picture }}"/>
-                </div></td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ content.body | raw }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ content.slug }}</td>
-            </tr>
-            <tr>
-                <th>Tags</th>
-                <td>{{ content.tags }}</td>
-            </tr>
-            <tr>
-                <th>Published_date</th>
-                <td>{{ content.publishedDate ? content.publishedDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated_at</th>
-                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Published</th>
-                <td>{{ content.published ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Full Width</th>
-                <td>{{ content.fullWidth ? 'Yes' : 'No' }}</td>
-            </tr>
+    {% if content is defined and content.id is not null %}
 
-        </tbody>
-    </table>
+        {# Barre d'actions sticky #}
+        <div class="action-bar sticky-top py-2 mb-3 bg-white border-bottom d-flex justify-content-between align-items-center">
+            <a href="{{ path('app_content_index', {'scope': content.scope.id}) }}" class="btn btn-light btn-sm">
+                ← {{ 'action.back_to_list'|trans }}
+            </a>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sm btn-primary" href="{{ path('app_content_edit', {'id': content.id, 'article_id': content.article.id}) }}">
+                    {{ 'action.edit'|trans }}
+                </a>
+                {{ include('back/content/_delete_form.html.twig') }}
+            </div>
+        </div>
+<div class="content-rtl-scope" dir="{{ app.request.locale == 'ar' ? 'rtl' : 'ltr' }}">
+        <div class="row">
+            {# ===== Colonne principale ===== #}
+            <div class="col-lg-8">
 
-    <a  class="btn btn-sm btn-default"  href="{{ path('app_content_index', {'scope': content.scope.id}) }}"><<< back to list</a> <br/>
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center flex-wrap gap-2">
+                        <h2 class="h5 mb-0">{{ content.title }}</h2>
 
-    <a class="btn btn-sm btn-primary mb-3 mt-3" href="{{ path('app_content_edit', {'id': content.id, 'article_id': content.article.id}) }}">edit</a>
-    {{ include('back/content/_delete_form.html.twig') }}
+                        {% if content.scope is defined %}
+                            <span class="badge bg-info text-dark">{{ content.scope.name }}</span>
+                        {% endif %}
+
+                        {% if content.published %}
+                            <span class="badge bg-success">{{ 'status.published'|trans }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ 'status.draft'|trans }}</span>
+                        {% endif %}
+
+                        {% if content.fullWidth %}
+                            <span class="badge bg-primary">{{ 'content.full_width'|trans }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body">
+                        {# Intro #}
+                        {% if content.intro %}
+                            <p class="lead mb-3">{{ content.intro }}</p>
+                        {% endif %}
+
+                        {# Image à la une #}
+                        {% if content.picture %}
+                            <figure class="mb-3 text-center">
+                                <a href="{{ asset('uploads/' ~ content.picture) }}" target="_blank" rel="noopener">
+                                    <img
+                                            src="{{ asset('uploads/' ~ content.picture) }}"
+                                            alt="{{ content.title }}"
+                                            class="img-fluid rounded border"
+                                            style="max-height:420px;object-fit:contain">
+                                </a>
+                                <figcaption class="small text-muted mt-1">{{ content.picture }}</figcaption>
+                            </figure>
+                        {% endif %}
+
+                        {# Corps (CKEditor) #}
+                        {% if content.body %}
+                            <article class="ck-content border rounded p-3">
+                                {{ content.body|raw }}
+                            </article>
+                        {% else %}
+                            <p class="text-muted mb-0">{{ 'content.no_content'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Tags #}
+                <div class="card mb-3">
+                    <div class="card-header"><strong>{{ 'content.keywords'|trans }}</strong></div>
+                    <div class="card-body">
+                        {% set tags = content.tags is iterable ? content.tags : (content.tags ? content.tags|split(',') : []) %}
+                        {% if tags|length %}
+                            {% for t in tags %}
+                                {% set tag = t|trim %}
+                                {% if tag != '' %}
+                                    <span class="badge bg-secondary me-1">{{ tag }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted">{{ 'content.no_tags'|trans }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+            {# ===== Colonne méta ===== #}
+            <div class="col-lg-4">
+
+                <div class="card mb-3">
+                    <div class="card-header"><strong>{{ 'content.information'|trans }}</strong></div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted">{{ 'content.id'|trans }}</span>
+                                <span>{{ content.id }}</span>
+                            </li>
+                            {% if content.slug %}
+                                <li class="list-group-item">
+                                    <div class="text-muted mb-1">{{ 'content.slug'|trans }}</div>
+                                    <code class="small">{{ content.slug }}</code>
+                                </li>
+                            {% endif %}
+                            {% if content.publishedDate %}
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span class="text-muted">{{ 'content.publication_date'|trans }}</span>
+                                    <span>{{ content.publishedDate|date('Y-m-d') }}</span>
+                                </li>
+                            {% endif %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted">{{ 'content.created_at'|trans }}</span>
+                                <span>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i') : '—' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted">{{ 'content.updated_at'|trans }}</span>
+                                <span>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i') : '—' }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                {# Liens rapides (optionnels) #}
+                <div class="card mb-3">
+                    <div class="card-header"><strong>{{ 'content.actions'|trans }}</strong></div>
+                    <div class="card-body d-grid gap-2">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ path('app_content_edit', {'id': content.id, 'article_id': content.article.id}) }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
+                        <a class="btn btn-outline-secondary btn-sm" href="{{ path('app_content_index', {'scope': content.scope.id}) }}">
+                            {{ 'action.back_to_list'|trans }}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</div>
+        {# Barre d'actions bas de page #}
+        <div class="action-bar py-3 mt-3 bg-white border-top d-flex justify-content-between align-items-center">
+            <a href="{{ path('app_content_index', {'scope': content.scope.id}) }}" class="btn btn-light">
+                ← {{ 'action.back_to_list'|trans }}
+            </a>
+            <div class="d-flex gap-2">
+                <a class="btn btn-primary" href="{{ path('app_content_edit', {'id': content.id, 'article_id': content.article.id}) }}">
+                    {{ 'action.edit'|trans }}
+                </a>
+                {{ include('back/content/_delete_form.html.twig') }}
+            </div>
+        </div>
+
     {% else %}
-        <table class="table">
-            <tr>
-                <td colspan="11">Cette Article n'est pas encore traduit en <b> {{language | upper}}</b></td>
-            </tr>
-        </table>
+        <div class="alert alert-warning">
+            {{ 'content.not_translated'|trans }} <b>{{ language|upper }}</b>
+        </div>
+        <a href="{{ path('app_content_index') }}" class="btn btn-light btn-sm">
+            ← {{ 'action.back_to_list'|trans }}
+        </a>
     {% endif %}
+{% endblock %}
 
+{# Optionnel : un petit style local #}
+{% block javascripts %}
+    {{ parent() }}
+    <style>
+        .ck-content img { max-width: 100%; height: auto; }
+        .ck-content figure { margin: 1rem auto; }
+        .action-bar .btn + .btn { margin-left: .5rem; }
+    </style>
 {% endblock %}

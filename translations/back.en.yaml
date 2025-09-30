@@ -1,0 +1,23 @@
+# translations/back.en.yaml
+action:
+  back_to_list: "Back to list"
+  edit: "Edit"
+
+status:
+  published: "Published"
+  draft: "Draft"
+
+content:
+  title_default: "Content"
+  full_width: "Full width"
+  no_content: "No content"
+  keywords: "Keywords"
+  no_tags: "No tags"
+  information: "Information"
+  id: "ID"
+  slug: "Slug"
+  publication_date: "Publication"
+  created_at: "Created at"
+  updated_at: "Updated at"
+  actions: "Actions"
+  not_translated: "This article is not yet translated into"

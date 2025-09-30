@@ -1,0 +1,23 @@
+# translations/back.ar.yaml
+action:
+  back_to_list: "العودة إلى القائمة"
+  edit: "تعديل"
+
+status:
+  published: "منشور"
+  draft: "مسودة"
+
+content:
+  title_default: "المحتوى"
+  full_width: "عرض كامل"
+  no_content: "لا يوجد محتوى"
+  keywords: "الكلمات المفتاحية"
+  no_tags: "لا توجد علامات"
+  information: "معلومات"
+  id: "المعرف"
+  slug: "الرابط المختصر"
+  publication_date: "النشر"
+  created_at: "تاريخ الإنشاء"
+  updated_at: "تاريخ التحديث"
+  actions: "الإجراءات"
+  not_translated: "هذا المقال لم يتم ترجمته بعد إلى"
