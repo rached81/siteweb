@@ -36,12 +36,19 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
      */
-    private $profiles;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
+     * Profils liés à la catégorie (ManyToMany correct ↔ Profile#categories)
+     * @ORM\ManyToMany(targetEntity=Profile::class, inversedBy="categories")
+     * @ORM\JoinTable(name="profile_category")  // adapte au nom **existant** si tu as déjà une table de jonction
      */
-    private $articles;
+    private Collection $profiles;
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="category")
+     * @var Collection<int, Article>
+     */
+    private Collection $articles;
+
       /**
      * @ORM\OneToMany(targetEntity=TimeLine::class, mappedBy="category")
      */
@@ -54,6 +61,7 @@ class Category
     {
         $this->articles = new ArrayCollection();
         $this->timeLines = new ArrayCollection();
+        $this->profiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,6 +132,27 @@ class Category
             }
         }
 
+        return $this;
+    }
+
+
+    /** @return Collection<int, Profile> */
+    public function getProfiles(): Collection { return $this->profiles; }
+
+    public function addProfile(Profile $profile): self
+    {
+        if (!$this->profiles->contains($profile)) {
+            $this->profiles->add($profile);
+            $profile->addCategory($this); // maintient la relation côté inverse
+        }
+        return $this;
+    }
+
+    public function removeProfile(Profile $profile): self
+    {
+        if ($this->profiles->removeElement($profile)) {
+            $profile->removeCategory($this);
+        }
         return $this;
     }
 

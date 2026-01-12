@@ -27,7 +27,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
-        $this->articles = new ArrayCollection();
+//        $this->articles = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->responses = new ArrayCollection();
         
@@ -108,13 +108,55 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="author_id")
+     * @var Collection<int, Content>
      */
     private $contents;
 
     /**
      * @ORM\OneToMany(targetEntity=Response::class, mappedBy="user")
+     * @var Collection<int, Response>
      */
     private $responses;
+
+
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $passwordChangedAt;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $mustChangePassword = false;
+
+    public function isMustChangePassword(): bool
+    {
+        return $this->mustChangePassword;
+    }
+
+    public function setMustChangePassword(bool $mustChangePassword): void
+    {
+        $this->mustChangePassword = $mustChangePassword;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordChangedAt()
+    {
+        return $this->passwordChangedAt;
+    }
+
+    /**
+     * @param mixed $passwordChangedAt
+     */
+    public function setPasswordChangedAt($passwordChangedAt): void
+    {
+        $this->passwordChangedAt = $passwordChangedAt;
+    }
+
 
 
     public function __toString(): string
@@ -310,35 +352,35 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Article>
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getAuthor() === $this) {
-                $article->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
+//    /**
+//     * @return Collection<int, Article>
+//     */
+//    public function getArticles(): Collection
+//    {
+//        return $this->articles;
+//    }
+//
+//    public function addArticle(Article $article): self
+//    {
+//        if (!$this->articles->contains($article)) {
+//            $this->articles[] = $article;
+//            $article->setAuthor($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeArticle(Article $article): self
+//    {
+//        if ($this->articles->removeElement($article)) {
+//            // set the owning side to null (unless already changed)
+//            if ($article->getAuthor() === $this) {
+//                $article->setAuthor(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * @return Collection<int, Content>

@@ -34,11 +34,12 @@ class Article
     private $update_at;
 
 
-
     /**
+     * Catégorie de l’article (owning side de OneToMany/ManyToOne)
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)  // ou false si obligatoire
      */
-    private $category;
+    private ?Category $category = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="article")

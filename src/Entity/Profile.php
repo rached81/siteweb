@@ -45,9 +45,10 @@ class Profile
     private $admins;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="profiles")
+     * Catégories liées à ce profil (inverse de Category#profiles)
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="profiles")
      */
-    private $categories;
+    private Collection $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=ProfileScope::class, mappedBy="profile")
@@ -60,6 +61,9 @@ class Profile
         $this->categories = new ArrayCollection();
         $this->profileScopes = new ArrayCollection();
     }
+
+
+
 
     public function getId(): ?int
     {
@@ -171,19 +175,35 @@ class Profile
         return $this->categories;
     }
 
+//    public function addCategory(Category $category): self
+//    {
+//        if (!$this->categories->contains($category)) {
+//            $this->categories[] = $category;
+//        }
+//
+//        return $this;
+//    }
     public function addCategory(Category $category): self
     {
         if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
+            $this->categories->add($category);
+            // côté inverse : Category est le owning side (JoinTable) → on maintient aussi
+            $category->getProfiles()->contains($this) || $category->addProfile($this);
         }
-
         return $this;
     }
 
+//    public function removeCategory(Category $category): self
+//    {
+//        $this->categories->removeElement($category);
+//
+//        return $this;
+//    }
     public function removeCategory(Category $category): self
     {
-        $this->categories->removeElement($category);
-
+        if ($this->categories->removeElement($category)) {
+            $category->getProfiles()->contains($this) && $category->removeProfile($this);
+        }
         return $this;
     }
 
